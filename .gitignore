@@ -1,1 +1,14 @@
-/target/
+.classpath
+.project
+.settings/
+
+.vscode/
+
+src/main/resources/db.properties
+
+target/
+
+src/main/java/dbproject/user/WEB-INF/classes/
+src/main/webapp/test-classes/
+src/main/webapp/WEB-INF/classes/
+src/main/webapp/WEB-INF/classes/dbproject/user/WEB-INF/classes/

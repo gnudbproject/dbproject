@@ -8,5 +8,6 @@
 			<li><a href="#">방명록</a></li>
 			<li><a href="#">출석체크</a></li>
 			<li><a href="#">과제제출</a></li>
+			<li><a href="/visitorsnotes">Visitor's Book</a></li>
 		</ul>
 	</div>

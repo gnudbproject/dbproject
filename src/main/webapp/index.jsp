@@ -3,7 +3,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link href="/stylesheets/index.css?v=1" rel="stylesheet" type="text/css">
+<link href="/stylesheets/index.css" rel="stylesheet" type="text/css">
 <head>
 <title>Insert title here</title>
 </head>
@@ -39,7 +39,6 @@
 				<a href="#"> forget your ID/password ? </a>
 			</form>
 		</div>
-
 	</div>
 </body>
 </html>
