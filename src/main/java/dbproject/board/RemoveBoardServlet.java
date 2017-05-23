@@ -1,9 +1,6 @@
 package dbproject.board;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +24,8 @@ public class RemoveBoardServlet extends HttpServlet {
 		
 		try {
 			boardDao.removeBoard(num);
+			boardDao.removeAllReBoard(num);//추가 sh
+
 			resp.sendRedirect("/board/Boardlist");
 		} catch (Exception e) {
 			logger.debug("RemoveBoardServlet error" + e);

@@ -1,6 +1,7 @@
 package dbproject.board;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -31,6 +32,8 @@ public class BoardviewServlet extends HttpServlet {
 		BoardDAO boardDao = new BoardDAO();
 		Board board = new Board();
 		
+		List list = new ArrayList(); // 추가 sh 		 
+
 		HttpSession session = req.getSession();
 		
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
@@ -42,6 +45,8 @@ public class BoardviewServlet extends HttpServlet {
 			boardDao.updateReadcont(num);
 			board = boardDao.viewBoard(num);
 			
+			list = boardDao.getReBoardList(num);//추가 sh
+			
 			if(board == null) {
 				logger.debug("Board View Fail");
 			}
@@ -49,6 +54,15 @@ public class BoardviewServlet extends HttpServlet {
 			req.setAttribute("isView", true);
 			req.setAttribute("board", board);
 			req.setAttribute("user", user);
+			
+			req.setAttribute("list", list); //추가 sh
+			req.setAttribute("isCreate", false);//추가 sh
+
+
+			
+			
+			// 이곳에 댓글 정보도
+			
 			RequestDispatcher rd = req.getRequestDispatcher("/board_form.jsp");
 			rd.forward(req, resp);
 			

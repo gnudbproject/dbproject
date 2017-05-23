@@ -34,7 +34,7 @@ public class UserDAO {
 		}
 	}
 
-	public void addUser(User user) throws SQLException{
+	public void addUser(User user) throws SQLException {
 		String sql = "insert into users values(?,?,?,?,?,?)";
 
 		// null 로 초기화
@@ -46,7 +46,7 @@ public class UserDAO {
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, user.getPassword());
 			pstmt.setString(3, user.getName());
@@ -67,7 +67,7 @@ public class UserDAO {
 		}
 	}
 
-	public User findByUserId(String userId) throws SQLException{
+	public User findByUserId(String userId) throws SQLException {
 		String sql = "select * from users where userId = ?";
 		// 리소스 반환
 
@@ -86,20 +86,15 @@ public class UserDAO {
 				return null;
 			}
 
-			return new User(
-					rs.getString("userId"), 
-					rs.getString("password"), 
-					rs.getString("name"), 
-					rs.getString("age"),
-					rs.getString("email"), 
-					rs.getString("gender"));
+			return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("age"),
+					rs.getString("email"), rs.getString("gender"));
 
 		} finally {
-			
+
 			if (rs != null) {
 				rs.close();
 			}
-			
+
 			if (pstmt != null) {
 				pstmt.close();
 			}
@@ -109,8 +104,9 @@ public class UserDAO {
 			}
 		}
 	}
-
-	public void removeUser(String userId) throws SQLException{
+	
+	
+	public void removeUser(String userId) throws SQLException {
 		String sql = "delete from users where userId = ?";
 
 		Connection conn = null;
@@ -151,7 +147,7 @@ public class UserDAO {
 			pstmt.setString(4, user.getEmail());
 			pstmt.setString(5, user.getGender());
 			pstmt.setString(6, user.getUserId());
-			
+
 			pstmt.executeUpdate();
 
 		} finally {

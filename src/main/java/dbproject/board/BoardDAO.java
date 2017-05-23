@@ -132,6 +132,7 @@ public class BoardDAO {
 		return null;
 	}
 	
+	
 	public void addBoard(Board board) throws SQLException {
 		String sql = "insert into board values(?,?,?,?,?,?,?,?,?,?)";
 		int num = 0;
@@ -165,6 +166,11 @@ public class BoardDAO {
 			SourceReturn();
 		}
 	}
+	
+	
+	
+	
+	
 	
 	public void removeBoard(int num) throws SQLException {
 		String sql = "delete from board where Num = ?";
@@ -249,4 +255,107 @@ public class BoardDAO {
 			SourceReturn();
 		}
 	}
+	
+	
+	
+	
+	//추가 sh 밑으로 전부
+	public List<reBoardDTO> getReBoardList (int num) throws SQLException{
+		
+		List<reBoardDTO> list = new ArrayList<reBoardDTO>(); // 목록 리턴을 위한 변수
+		
+		// 목록를 조회하기 위한 쿼리
+		String sql = "select * from reBoard where BoardNum = ?";
+			
+		try{
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			while(rs.next()){
+				reBoardDTO board = new reBoardDTO();
+				board.setNum( rs.getInt("Num") );
+				board.setContent( rs.getString("Content") );
+				board.setUserId( rs.getString("UserId") );
+				board.setBoardNum( rs.getInt("BoardNum") );
+				
+				list.add(board); // 행을 하나씩 리스트에 추가
+			}
+			return list;
+			
+		}catch(Exception e){
+			logger.debug("getBoardList Error : "+ e );
+		}
+		
+		finally{ // DB 관련들 객체를 종료
+			SourceReturn();
+		}
+		
+		return null;
+	}
+	
+	public void addReBoard(int bNum, String userId, String content ) throws SQLException {
+		String sql = "insert into reBoard values(?,?,?,?)";
+		int num = 0;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select max(Num) from reBoard");
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				num = rs.getInt(1)+1;
+			else
+				num = 1;
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, bNum);
+
+			pstmt.executeUpdate();
+
+		} finally {
+			SourceReturn();
+		}
+	}
+
+	public void removeReBoard(int num) throws SQLException {
+		String sql = "delete from reBoard where Num = ?";
+				
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			
+			pstmt.executeUpdate();
+			
+		} finally {
+			SourceReturn();
+		}
+	}
+	
+	public void removeAllReBoard(int num) throws SQLException {
+		String sql = "delete from reBoard where boardNum = ?";
+				
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			
+			pstmt.executeUpdate();
+			
+		} finally {
+			SourceReturn();
+		}
+	}
+	
+	
 }

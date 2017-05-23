@@ -88,6 +88,9 @@ public class VisitorsNotesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+
 		request.setAttribute("page", null);
 		VisitorsDao visitorsDao = new VisitorsDao();
 		HttpSession session = request.getSession();

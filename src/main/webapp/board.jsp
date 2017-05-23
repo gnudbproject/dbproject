@@ -96,6 +96,8 @@
 				</table>
 			</div>
 		</div>
+		
+		
 
 		<div id="board-footer">
 			<button id="board-button"

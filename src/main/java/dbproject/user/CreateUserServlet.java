@@ -21,15 +21,30 @@ public class CreateUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
 		String age = request.getParameter("age");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
-		
-		
+		UserDAO userDAO = new UserDAO();
 		User user = new User(userId, password, name, age, email, gender);
+		
+		try {
+			if (userDAO.findByUserId(userId)!=null) {
+				request.setAttribute("user", user);
+				String errorMessage = "중복된 아이디가 존재합니다.";
+				errorForward(request, response, errorMessage);
+				return;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
 		// Validator 유효성 체크
 		Validator validator = MyvalidatorFactory.createValidator();
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate( user );
@@ -41,11 +56,14 @@ public class CreateUserServlet extends HttpServlet {
 			return;
 		}
 		
-		UserDAO userDAO = new UserDAO();
+		
+		
+		
 		try {
 			userDAO.addUser(user);
 		} catch (SQLException e) {
 		}
+		
 		response.sendRedirect("/");
 	}
 	

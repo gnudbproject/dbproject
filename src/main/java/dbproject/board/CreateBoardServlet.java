@@ -32,6 +32,7 @@ public class CreateBoardServlet extends HttpServlet{
 			System.out.println(e);
 		}
 
+		
 		resp.sendRedirect("/board/Boardlist");
 	
 	}

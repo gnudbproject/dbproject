@@ -1,8 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="dbproject.board.*"%>
+<%@ page import="dbproject.user.LoginServlet" %>
+<%@ page import= "dbproject.user.SessionUtils" %>
+<%@ page import= "javax.servlet.http.HttpSession" %>
+
+
+<%  // 추가항목sh
+	List list=(List)request.getAttribute("list");
+	boolean  confirm = (boolean)request.getAttribute("isCreate");	
+
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<link href="/stylesheets/form2.css" rel="stylesheet" type="text/css">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Runtime</title>
@@ -74,6 +90,41 @@
 				</td>
 			</tr>
 	</table>
+	
+	
+	
+	<% //추가sh
+	if(confirm != true){ %>
+		<div class="wrap">
+			<div class="wrap2">
+				<form action="/replyReply" method="post">
+					<input type="hidden" name="num" value="${board.num}" />
+					<input type="text" size="80" maxlength="200" name="reContent" value="">
+					<input type="submit" name="reWrite" value="댓글입력" />
+				</form>
+	    	</div>
+	    
+	    
+	
+	<%		
+		for(int i=0 ; i < list.size(); i++){
+			reBoardDTO reBoard = (reBoardDTO)list.get(i); 			
+	%>
+			<div class="wrap2">
+				<div class="reName"><%=reBoard.getUserId() %></div>
+				<div class="reRe"><%=reBoard.getContent() %></div>	
+				
+			<%  if(request.getSession().getAttribute("userId").equals(reBoard.getUserId()) ){%>
+				<div class="x"><input class="x" type="button" name="X" value="X" onclick="location.href='/board/removeReBoard?reNum=<%=reBoard.getNum() %>&bNum=<%=reBoard.getBoardNum() %>'" /></div>	
+	<%          }%>
+				
+			</div>
+	<%
+		}
+	}			
+	%>  
+	</div>
+	
 </form>
 </body>
 </html>
