@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dbproject.support.SessionUtils;
 import dbproject.user.LoginServlet;
-import dbproject.user.SessionUtils;
 import dbproject.user.User;
 import dbproject.user.UserDAO;
 

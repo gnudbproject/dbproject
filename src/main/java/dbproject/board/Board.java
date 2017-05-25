@@ -1,12 +1,14 @@
 package dbproject.board;
 
+import java.sql.Date;
+
 public class Board {
 
 	private String subject;
 	private String content;
 	private String userId;
 	private String password;
-	private String date;
+	private Date date;
 	private int readcnt;
 	private int num;
 	private int re_ref;
@@ -40,11 +42,10 @@ public class Board {
 	public Board() {
 	}
 	
-	public Board(String subject, String content, String userId, String password) {
+	public Board(String subject, String content, String userId) {
 		this.subject = subject;
 		this.content = content;
 		this.userId = userId;
-		this.password = password;
 	}
 	
 	public String getSubject() {
@@ -79,11 +80,11 @@ public class Board {
 		this.password = password;
 	}
 	
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 	
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	

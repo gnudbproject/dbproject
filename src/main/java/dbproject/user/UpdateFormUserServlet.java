@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import dbproject.support.SessionUtils;
+
 @WebServlet("/users/updateForm")
 public class UpdateFormUserServlet extends HttpServlet{
 	

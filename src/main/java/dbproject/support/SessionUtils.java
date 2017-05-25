@@ -1,4 +1,4 @@
-package dbproject.user;
+package dbproject.support;
 
 import javax.servlet.http.HttpSession;
 

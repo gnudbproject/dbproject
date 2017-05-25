@@ -112,7 +112,7 @@ public class BoardDAO {
 				board.setSubject(rs.getString("Subject"));
 				board.setContent(rs.getString("Content"));
 				board.setReadcnt(rs.getInt("Readcnt"));
-				board.setDate(rs.getString("Date"));
+				board.setDate(rs.getDate("Date"));
 				board.setRe_ref(rs.getInt("re_ref"));
 				board.setRe_lev(rs.getInt("re_lev"));
 				board.setRe_seq(rs.getInt("re_seq"));
@@ -132,6 +132,25 @@ public class BoardDAO {
 		return null;
 	}
 	
+	public Board findByBoardInfo(int num) throws SQLException {
+		String sql = "select * from board where Num = ?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+
+			rs = pstmt.executeQuery(); // 결과를 받아와 저장
+
+			if (!rs.next()) {
+				return null;
+			}
+
+			return new Board(rs.getString("subject"), rs.getString("content"), rs.getString("userId"));
+
+		} finally {
+			SourceReturn();
+		}
+	}
 	
 	public void addBoard(Board board) throws SQLException {
 		String sql = "insert into board values(?,?,?,?,?,?,?,?,?,?)";
@@ -155,7 +174,7 @@ public class BoardDAO {
 			pstmt.setString(4, board.getUserId());
 			pstmt.setString(5, board.getPassword());
 			pstmt.setInt(6, board.getReadcnt());
-			pstmt.setString(7, board.getDate());
+			pstmt.setDate(7, board.getDate());
 			pstmt.setInt(8, board.getRe_ref());
 			pstmt.setInt(9, board.getRe_lev());
 			pstmt.setInt(10, board.getRe_seq());
@@ -204,7 +223,7 @@ public class BoardDAO {
 				board.setUserId( rs.getString("UserId") );
 				board.setPassword( rs.getString("Password") );
 				board.setReadcnt( rs.getInt("Readcnt") );
-				board.setDate( rs.getString("Date") );
+				board.setDate( rs.getDate("Date") );
 				board.setRe_lev( rs.getInt("re_ref") );
 				board.setRe_ref( rs.getInt("re_ref") );
 				board.setRe_seq( rs.getInt("re_seq") );
@@ -356,6 +375,13 @@ public class BoardDAO {
 			SourceReturn();
 		}
 	}
-	
+	public void addFile(String File_Path,String Author)throws SQLException{
+		String sql="insert into Files(File_Path,Author) values(?,?)";
+		conn=getConnection();
+		pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, File_Path);
+		pstmt.setString(2, Author);
+		pstmt.executeUpdate();
+	}
 	
 }

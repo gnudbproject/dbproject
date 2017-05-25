@@ -4,6 +4,8 @@
 
 .vscode/
 
+.lst
+
 src/main/resources/db.properties
 
 target/

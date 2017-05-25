@@ -6,7 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="dbproject.board.*"%>
 <%@ page import="dbproject.user.LoginServlet" %>
-<%@ page import= "dbproject.user.SessionUtils" %>
+<%@ page import= "dbproject.support.SessionUtils" %>
 <%@ page import= "javax.servlet.http.HttpSession" %>
 
 
@@ -43,15 +43,15 @@
 				</c:if>
 					<h2>${TitleName}</h2></td>
 			</tr>
-			<tr>
+		<tr>
 				<td width="70" align="center">NUMBER</td>
-				<td width="150">
-				<input type="hidden" name="num" value="${board.num}" />${board.num}</td>
+				<td width="330">
+				<input type="hidden" name="num" value="${board.num}" /><%= request.getParameter("index") %></td>
 			</tr>
 			<tr>
 				<td width="70" align="center">USER</td>
 				<td width="330">
-				<input type="hidden" name="userId" value="${userId}" /> ${userId}</td>
+				<input type="hidden" name="userId" value="${board.userId}" /> ${board.userId}</td>
 			</tr>
 			<tr>
 				<td width="70" align="center">SUBJECT</td>
@@ -63,10 +63,19 @@
 				<td width="330">
 				<input type="hidden" name="email" value="${user.email}" /> ${user.email}</td>
 			</tr>
-			<tr>
+		<tr>
 				<td width="70" align="center">CONTENT</td>
 				<td width="330">
-				<textarea name="content" rows="13" cols="40">${board.content}</textarea></td>
+				<c:choose>
+				<c:when test = "${isNotUser}" >
+				<textarea readonly name="content" rows="16" cols="50" style = "resize:none;">${board.content}</textarea>
+				</td>
+				</c:when>
+				
+				<c:otherwise>
+				<textarea name="content"  rows = "13" cols="40">${board.content}</textarea></td>
+				</c:otherwise>
+				</c:choose>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
@@ -74,11 +83,14 @@
 			<c:choose>
 			
 			<c:when test="${isView}">
-				<input type="submit" value="Modify" />
-				
-				
-				<input type="button" name="delete" value="Delete" onclick="location.href='/board/removeBoard?num=${board.num}'" />
-				
+				<c:if test = "${isNotUser}" >
+				<a></a>
+				</c:if>
+			
+				<c:if test = "${isUser}">
+				<input type="button" name="delete"  value="Delete" onclick="location.href='/card/removecard?num=${card.num}'" />
+				<input type="submit" name="modify" value="Modify"/>
+				</c:if>
 			</c:when>
 			
 			<c:otherwise>

@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import dbproject.support.SessionUtils;
 import dbproject.user.LoginServlet;
-import dbproject.user.SessionUtils;
 import dbproject.user.User;
 import dbproject.user.UserDAO;
 
@@ -39,6 +39,14 @@ public class BoardviewServlet extends HttpServlet {
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
 		int num = Integer.parseInt( req.getParameter("num") );
+		String board_userId = req.getParameter("board_userId");
+		
+		if(!userId.equals(board_userId)) {
+			req.setAttribute("isNotUser", true);
+		}
+		
+		else req.setAttribute("isUser", true);
+		
 		
 		try {
 			user = userDao.findByUserId(userId);
@@ -53,7 +61,6 @@ public class BoardviewServlet extends HttpServlet {
 			
 			req.setAttribute("isView", true);
 			req.setAttribute("board", board);
-			req.setAttribute("user", user);
 			
 			req.setAttribute("list", list); //추가 sh
 			req.setAttribute("isCreate", false);//추가 sh

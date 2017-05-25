@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dbproject.support.MyvalidatorFactory;
+import dbproject.support.SessionUtils;
 
 @WebServlet("/users/update")
 public class UpdateUserServlet extends HttpServlet {

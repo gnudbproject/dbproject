@@ -48,7 +48,7 @@
 		%>
 
 					<tr height="50">
-						<td align="center"><%=board.getNum()%></td>
+						<td align="center"><%=i+1 %></td>
 						<td>
 							<%if(board.getRe_lev()!=0){ %> 
 							<%for(int a=0;a<=board.getRe_lev()*2;a++){ %>
@@ -56,12 +56,12 @@
 						
 							<%}else{ %>
 							<%} %> 
-						<a href="/board/viewBoard?num=<%=board.getNum()%>"> 
+						<a href="/board/viewBoard?num=<%=board.getNum()%>&index=<%=i+1 %>&board_userId=<%=board.getUserId()%>"> 
 						<%=board.getSubject()%>
 						</a>
 						</td>
 						<td align="center"><%=board.getUserId() %></td>
-						<td align="center"><%=board.getDate() %></td>
+						<td align="center"><%=board.getDate().toString() %></td>
 						<td align="center"><%=board.getReadcnt() %></td>
 					</tr>
 			<%	
@@ -96,8 +96,6 @@
 				</table>
 			</div>
 		</div>
-		
-		
 
 		<div id="board-footer">
 			<button id="board-button"
