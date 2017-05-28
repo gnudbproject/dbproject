@@ -50,8 +50,9 @@ public class UpdateUserServlet extends HttpServlet {
 		String age = req.getParameter("age");
 		String email = req.getParameter("email");
 		String gender = req.getParameter("gender");
+		int power=Integer.parseInt(req.getParameter("power"));
 		System.out.println(name);
-		User user = new User(userId, password, name, age, email, gender);
+		User user = new User(userId, password, name, age, email, gender,power);
 
 		// Validator 유효성 체크
 		Validator validator = MyvalidatorFactory.createValidator();

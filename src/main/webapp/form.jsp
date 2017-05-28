@@ -37,11 +37,16 @@
 
 	<div class="signup-container">
 		<div class="signup-header">
-
-			<c:set var="pageName" value="회원가입" />
+			
+			<c:set var="pageName" value="학생 회원가입" />
+			<c:if test="${isMaster }">
+				<c:set var="pageName" value="교사 회원가입"/>
+			</c:if>
 			<c:if test="${isUpdate}">
-				<!-- userId 유무로써 판단했던 것을 서블릿 정보로써 판단  -->
-				<c:set var="pageName" value="개인정보수정" />
+				<c:set var="pageName" value="학생정보수정" />
+				<c:if test="${isMaster }">
+					<c:set var="pageName" value="교사정보수정"/>
+				</c:if>
 			</c:if>
 			<h1>${pageName}</h1>
 		</div>
@@ -136,6 +141,8 @@
 					<label class="" for="email">이메일</label> <input type="text"
 						name="email" value="${user.email}" />
 				</div>
+				
+				<input type="hidden" name="power" value="${user.power }"/> <!-- 권한 추가 -->
 
 				<div class="signup-footer">
 					<button type="submit" class="sign_up_button">

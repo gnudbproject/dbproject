@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
@@ -21,6 +22,7 @@ public class CreateUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session=request.getSession();
 		
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
@@ -28,21 +30,10 @@ public class CreateUserServlet extends HttpServlet {
 		String age = request.getParameter("age");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
+		int power = Integer.parseInt(request.getParameter("power"));
+		
 		UserDAO userDAO = new UserDAO();
-		User user = new User(userId, password, name, age, email, gender);
-		
-		try {
-			if (userDAO.findByUserId(userId)!=null) {
-				request.setAttribute("user", user);
-				String errorMessage = "중복된 아이디가 존재합니다.";
-				errorForward(request, response, errorMessage);
-				return;
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
+		User user = new User(userId, password, name, age, email, gender,power);
 		
 		
 		// Validator 유효성 체크
@@ -57,14 +48,16 @@ public class CreateUserServlet extends HttpServlet {
 		}
 		
 		
-		
-		
 		try {
 			userDAO.addUser(user);
 		} catch (SQLException e) {
 		}
-		
-		response.sendRedirect("/");
+		if(session.getAttribute("isMaster")!=null){
+			response.sendRedirect("/main.jsp");
+		}
+		else{
+			response.sendRedirect("/");
+		}
 	}
 	
 	private void errorForward(HttpServletRequest request, HttpServletResponse response, String errorMessage)

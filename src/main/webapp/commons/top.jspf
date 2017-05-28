@@ -24,6 +24,9 @@
 				<a> 로그인이 필요한 서비스입니다 </a>
 			</c:when>
 			<c:otherwise>
+				<c:if test="${isMaster==true }">
+					<a href="/users/createForm">교사 계정 생성</a> /
+				</c:if>
 				<a href="/users/logout"> User(logout)</a>
 				/
 				<a href="/users/updateForm"> 개인정보수정 </a>

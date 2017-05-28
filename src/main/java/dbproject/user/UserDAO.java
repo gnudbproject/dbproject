@@ -35,7 +35,7 @@ public class UserDAO {
 	}
 
 	public void addUser(User user) throws SQLException {
-		String sql = "insert into users values(?,?,?,?,?,?)";
+		String sql = "insert into users values(?,?,?,?,?,?,?)";
 
 		// null 로 초기화
 		Connection conn = null;
@@ -53,6 +53,7 @@ public class UserDAO {
 			pstmt.setString(4, user.getAge());
 			pstmt.setString(5, user.getEmail());
 			pstmt.setString(6, user.getGender());
+			pstmt.setInt(7, user.getPower());
 
 			pstmt.executeUpdate();
 
@@ -87,7 +88,7 @@ public class UserDAO {
 			}
 
 			return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("age"),
-					rs.getString("email"), rs.getString("gender"));
+					rs.getString("email"), rs.getString("gender"),rs.getInt("power"));
 
 		} finally {
 
@@ -132,7 +133,7 @@ public class UserDAO {
 
 	public void updateUser(User user) throws SQLException {
 
-		String sql = "update users set password = ?, name = ?, age = ?, email = ?, gender = ? where userId = ?";
+		String sql = "update users set password = ?, name = ?, age = ?, email = ?, gender = ? , power=? where userId = ?";
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -147,6 +148,7 @@ public class UserDAO {
 			pstmt.setString(4, user.getEmail());
 			pstmt.setString(5, user.getGender());
 			pstmt.setString(6, user.getUserId());
+			pstmt.setInt(7, user.getPower());
 
 			pstmt.executeUpdate();
 

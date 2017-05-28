@@ -31,11 +31,13 @@ public class User {
 	@NotNull(message = "성별을 골라주세요.")
 	private String gender;
 
-	public User() {
-
+	private int power;
+	
+	public User(int power) {
+		this.power=power;
 	}
 
-	public User(String userId, String password, String name, String age, String email, String gender) {
+	public User(String userId, String password, String name, String age, String email, String gender,int power) {
 		super();
 		this.userId = userId;
 		this.password = password;
@@ -43,6 +45,7 @@ public class User {
 		this.age = age;
 		this.email = email;
 		this.gender = gender;
+		this.power=power;
 	}
 
 	@Override
@@ -98,6 +101,14 @@ public class User {
 		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
 	}
 
 	public String getGender() {
@@ -157,7 +168,7 @@ public class User {
 		return this.password.equals(newPassword);
 	}
 
-	public static boolean login(String userId, String password) throws Exception {
+	public static int login(String userId, String password) throws Exception {
 		UserDAO userDAO = new UserDAO();
 		User user = userDAO.findByUserId(userId);
 		if (user == null) {
@@ -167,7 +178,9 @@ public class User {
 		if (!user.matchPassword(password)) {
 			throw new PasswordMismatchException();
 		}
-		return true;
+		if(user.getUserId().equals("master")||user.getPower()==1)   // 유저가 관리자일때
+			return 1;
+		return 0;   //유저가 학생일때
 	}
 
 }

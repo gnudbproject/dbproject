@@ -28,7 +28,6 @@ public class BoardviewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		UserDAO userDao = new UserDAO();
-		User user = new User();
 		BoardDAO boardDao = new BoardDAO();
 		Board board = new Board();
 		
@@ -49,7 +48,6 @@ public class BoardviewServlet extends HttpServlet {
 		
 		
 		try {
-			user = userDao.findByUserId(userId);
 			boardDao.updateReadcont(num);
 			board = boardDao.viewBoard(num);
 			

@@ -23,8 +23,12 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		try {
-			User.login(userId, password);
+			int power=User.login(userId, password);
 			HttpSession session = request.getSession();
+			if(power==1){   //유저가 관리자일때
+				session.setAttribute("isMaster", true);
+			}
+			System.out.println(power);
 			session.setAttribute(SESSION_USER_ID, userId);
 			response.sendRedirect("/main.jsp");
 
