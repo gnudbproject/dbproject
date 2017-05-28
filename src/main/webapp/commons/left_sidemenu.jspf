@@ -9,5 +9,6 @@
 			<li><a href="#">출석체크</a></li>
 			<li><a href="/upload.jsp">과제제출</a></li>
 			
+			<li><a href="/subject/Subjectlist">과목정보</a></li>
 		</ul>
 	</div>
