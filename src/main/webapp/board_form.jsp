@@ -67,13 +67,12 @@
 				<td width="70" align="center">CONTENT</td>
 				<td width="330">
 				<c:choose>
-				<c:when test = "${isNotUser}" >
-				<textarea readonly name="content" rows="16" cols="50" style = "resize:none;">${board.content}</textarea>
-				</td>
+				<c:when test = "${isUser==true||isMaster==true}" >
+				<textarea name="content"  rows = "13" cols="40">${board.content}</textarea></td>
 				</c:when>
 				
 				<c:otherwise>
-				<textarea name="content"  rows = "13" cols="40">${board.content}</textarea></td>
+				<textarea readonly name="content" rows="16" cols="50" style = "resize:none;">${board.content}</textarea>
 				</c:otherwise>
 				</c:choose>
 			</tr>
@@ -87,7 +86,7 @@
 				<a></a>
 				</c:if>
 			
-				<c:if test = "${isUser}">
+				<c:if test = "${isUser==true||isMaster==true}">  <!-- master아이디는 모든 게시물 수정삭제 가능 -->
 				<input type="button" name="delete"  value="Delete" onclick="location.href='/card/removecard?num=${card.num}'" />
 				<input type="submit" name="modify" value="Modify"/>
 				</c:if>
@@ -126,7 +125,7 @@
 				<div class="reName"><%=reBoard.getUserId() %></div>
 				<div class="reRe"><%=reBoard.getContent() %></div>	
 				
-			<%  if(request.getSession().getAttribute("userId").equals(reBoard.getUserId()) ){%>
+			<%  if(request.getSession().getAttribute("userId").equals(reBoard.getUserId()) || (boolean)request.getSession().getAttribute("isMaster")==true){%>  <!-- 마스터 아이디는 모든댓글 삭제 가능 -->
 				<div class="x"><input class="x" type="button" name="X" value="X" onclick="location.href='/board/removeReBoard?reNum=<%=reBoard.getNum() %>&bNum=<%=reBoard.getBoardNum() %>'" /></div>	
 	<%          }%>
 				
