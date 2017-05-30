@@ -1,6 +1,6 @@
-<%@page import="dbproject.visitors.PageInfo"%>
-<%@page import="dbproject.visitors.VisitorsNote"%>
-<%@page import="java.util.ArrayList"%>
+<%@ page import="dbproject.visitors.PageInfo"%>
+<%@ page import="dbproject.visitors.VisitorsNote"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -31,7 +31,7 @@
 		<form id="form-visitorsnote" action="/visitorsnotes" method="post">
 			<table>
 				<tr>
-					<td>[USERNAME] ${sessionScope.userId}</td>
+					<td>${sessionScope.userId}</td>
 				</tr>
 				<tr>
 					<td><textarea name="notetext" cols="40" rows="5"></textarea></td>
@@ -54,6 +54,18 @@
 				</tr>
 				<tr>
 					<td><%=vnList.get(i).getVbtext()%></td>
+				</tr>
+		
+				<tr>
+					<td>
+		<%  		
+					boolean yn=true;
+					if(request.getSession().getAttribute("isMaster")==null)
+						yn=false;
+					if(request.getSession().getAttribute("userId").equals(vnList.get(i).getUserid()) || yn) {%>
+						<input type="button" name="DEL" value="DEL" onclick="location.href='/rmvnote?page=<%=nowPage%>&code=<%=vnList.get(i).getVbcode()%>'" />
+		<%			} %>
+					</td>
 				</tr>
 		<%
 				}

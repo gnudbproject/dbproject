@@ -118,4 +118,19 @@ public class VisitorsDao {
 			SourceReturn();
 		}
 	}
+	
+	public void RemoveVisitorsNote(int vbcode) throws SQLException {
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM visitorsbook WHERE vbcode = ?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vbcode);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SourceReturn();
+		}
+	}
 }
