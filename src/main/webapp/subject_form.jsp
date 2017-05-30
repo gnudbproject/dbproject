@@ -83,7 +83,7 @@
 				<a href="/files/uploadlist?subjectNum=<c:out value="${sNum }"/>">제출확인하기</a>
 				
 				<c:if test = "${isMaster==true}">  <!-- master아이디만 과제게시물 수정삭제 가능 -->
-				<input type="button" name="delete"  value="Delete" onclick="location.href='/subjects/removeSubject?num=${subject.subjectNum}'" />
+				<input type="button" name="delete"  value="Delete" onclick="location.href='/subjects/removeSubject?subjectNum=${subject.subjectNum}'" />
 				<input type="submit" name="modify" value="Modify"/>
 				</c:if>
 			</c:when>

@@ -189,7 +189,7 @@ public class UploadDAO {
 		}
 		
 		public void removeSubject(int num) throws SQLException {
-			String sql = "delete from subject where Num = ?";
+			String sql = "delete from subject where subjectNum = ?";
 					
 			try {
 				conn = getConnection();
@@ -250,7 +250,7 @@ public class UploadDAO {
 		}
 		
 		public void updateSubject(Subject subject) throws SQLException {
-			String sql = "update subject set subjectName = ?, subjectContent = ? subjectDate=? where subjectNum = ?";
+			String sql = "update subject set subjectName = ?, subjectContent = ? ,subjectDate=? where subjectNum = ?";
 					
 			conn = getConnection();
 			
