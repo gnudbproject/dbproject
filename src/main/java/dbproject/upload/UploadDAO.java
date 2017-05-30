@@ -339,5 +339,21 @@ public class UploadDAO {
 					SourceReturn();
 				}
 			return null;
+		}
+		
+		public void removeFile(String  fileName) throws SQLException {
+			try {
+				String sql="delete from files where File_Name=?";
+				conn=getConnection();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, fileName);
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				logger.debug("removeFile error:"+e.getMessage());
 			}
+			finally{
+				SourceReturn();
+			}
+			
+		}
 }

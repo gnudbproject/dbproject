@@ -47,7 +47,7 @@
 								<td align="center">${list.author}</td>
 								<td align="center"><fmt:formatDate value="${list.uploadTime}" pattern="yyyy-MM-dd"/></td>
 								<td align="center">${list.subjectName}</td>
-								<td align="center"><a href="/files/delete?fileNum=${list.fileNum}">제출취소</a></td>
+								<td align="center"><a href="/files/delete?fileName=${list.fileName}">제출취소</a></td>
 							</tr>
 				</c:forEach>
 			</c:when>
