@@ -40,7 +40,7 @@
 <script>
 		function msg() {
 			if (confirm("정말 탈퇴 하시겠습니까?")) {
-				location.href = "/users/dropuser";
+				location.href = "/users/dropuser?userId=<%=session.getAttribute("userId") %>";
 			} else {
 				return;
 			}

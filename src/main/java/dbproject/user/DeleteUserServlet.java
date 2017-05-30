@@ -38,11 +38,13 @@ public class DeleteUserServlet extends HttpServlet {
 				response.sendRedirect("/");
 			}
 			//본인 아이디가 아닐경우
+			else{
 			RequestDispatcher rd=request.getRequestDispatcher("/users/userList");
 			rd.forward(request, response);
+			}
 			
 		} catch (Exception e) {
-			logger.debug("drop fail" + e);
+			logger.debug("drop fail:" + e);
 		}
 		
 		
