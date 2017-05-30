@@ -33,6 +33,8 @@ public class User {
 
 	private int power;
 	
+	public User(){}
+	
 	public User(int power) {
 		this.power=power;
 	}

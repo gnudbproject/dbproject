@@ -1,8 +1,8 @@
 package dbproject.user;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,24 +21,30 @@ public class DeleteUserServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(UpdateUserServlet.class);
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		HttpSession session = req.getSession();
+		String userId=request.getParameter("userId");
+		HttpSession session = request.getSession();
 		
-		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
-		
-		logger.debug("" + userId);
 		try {
 			UserDAO userDao = new UserDAO();
 			userDao.removeUser(userId);
-			session.removeAttribute("userId");
-	
+			
+			//만약 제거한 아이디가 본인 아이디이면 로그아웃처리
+			String sessionId=SessionUtils.getStringValue(session, "userId");  
+			if(sessionId.equals(userId)){
+				session.removeAttribute("userId");
+				response.sendRedirect("/");
+			}
+			//본인 아이디가 아닐경우
+			RequestDispatcher rd=request.getRequestDispatcher("/users/userList");
+			rd.forward(request, response);
+			
 		} catch (Exception e) {
-			logger.debug("\ndrop fail" + e);
+			logger.debug("drop fail" + e);
 		}
 		
-		resp.sendRedirect("/");
 		
 	}
 }

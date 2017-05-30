@@ -1,6 +1,5 @@
 package dbproject.user;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -8,9 +7,44 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class UserDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+	
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	PreparedStatement pstmt2 = null;
+	ResultSet rs2 = null;
+	
+	public void SourceReturn() throws SQLException {
+		
+		if(this.conn != null) {
+			conn.close();
+		}
+		if(this.pstmt != null) {
+			pstmt.close();
+		}
+		if(this.rs != null) {
+			rs.close();
+		}
+		if(this.pstmt2 != null) {
+			pstmt2.close();
+		}
+		if(this.rs2 != null) {
+			rs2.close();
+		}
+		
+	}
+	
 	public Connection getConnection() {
 		Properties props = new Properties();
 		InputStream in = UserDAO.class.getResourceAsStream("/db.properties");
@@ -37,12 +71,6 @@ public class UserDAO {
 	public void addUser(User user) throws SQLException {
 		String sql = "insert into users values(?,?,?,?,?,?,?)";
 
-		// null 로 초기화
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		// JDBC 리소스 반환
-
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -58,24 +86,13 @@ public class UserDAO {
 			pstmt.executeUpdate();
 
 		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-
-			if (conn != null) {
-				conn.close();
-			}
+			SourceReturn();
 		}
 	}
 
 	public User findByUserId(String userId) throws SQLException {
 		String sql = "select * from users where userId = ?";
-		// 리소스 반환
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
+		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -92,26 +109,13 @@ public class UserDAO {
 
 		} finally {
 
-			if (rs != null) {
-				rs.close();
-			}
-
-			if (pstmt != null) {
-				pstmt.close();
-			}
-
-			if (conn != null) {
-				conn.close();
-			}
+			SourceReturn();
 		}
 	}
 	
 	
 	public void removeUser(String userId) throws SQLException {
 		String sql = "delete from users where userId = ?";
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 
 		try {
 			conn = getConnection();
@@ -120,23 +124,13 @@ public class UserDAO {
 
 			pstmt.executeUpdate();
 		} finally {
-
-			if (conn != null) {
-				conn.close();
-			}
-
-			if (pstmt != null) {
-				pstmt.close();
-			}
+			SourceReturn();
 		}
 	}
 
 	public void updateUser(User user) throws SQLException {
 
 		String sql = "update users set password = ?, name = ?, age = ?, email = ?, gender = ? , power=? where userId = ?";
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 
 		try {
 			conn = getConnection();
@@ -154,13 +148,33 @@ public class UserDAO {
 
 		} finally {
 
-			if (conn != null) {
-				conn.close();
+			SourceReturn();
+		}
+	}
+	public List getUserList() throws SQLException{
+		String sql="select * from users";
+		List userList=new ArrayList();
+		try{
+			conn=getConnection();
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				User user=new User();
+				user.setUserId(rs.getString("userId"));
+				user.setName(rs.getString("name"));
+				user.setAge(rs.getString("age"));
+				user.setEmail(rs.getString("email"));
+				user.setGender(rs.getString("gender"));
+				user.setPower(rs.getInt("power"));
+				userList.add(user);
 			}
-
-			if (pstmt != null) {
-				pstmt.close();
-			}
+			
+		}catch(SQLException e){
+			logger.debug("getUserList error:"+e.getMessage());
+		}
+		finally{
+			SourceReturn();
+			return userList;
 		}
 	}
 }

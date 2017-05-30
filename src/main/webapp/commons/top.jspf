@@ -25,7 +25,7 @@
 			</c:when>
 			<c:otherwise>
 				<c:if test="${isMaster==true }">
-					<a href="/users/createForm">교사 계정 생성</a> /
+					<a href="/users/userList">유저관리</a> /
 				</c:if>
 				<a href="/users/logout"> User(logout)</a>
 				/
