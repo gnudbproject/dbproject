@@ -77,7 +77,7 @@ public class UploadDAO {
 		
 		public int getListCount() throws SQLException {
 
-			String sql = "select count(*) from subjects";
+			String sql = "select count(*) from subject";
 			
 			int count = 0;
 			
@@ -105,7 +105,7 @@ public class UploadDAO {
 			List list = new ArrayList(); // 목록 리턴을 위한 변수
 			
 			// 목록를 조회하기 위한 쿼리
-			String sql = "select * from subjects order by re_ref desc, re_seq asc limit ?, ?"; 
+			String sql = "select * from subject order by re_ref desc, re_seq asc limit ?, ?"; 
 			
 			// 조회범위
 			int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
@@ -148,7 +148,7 @@ public class UploadDAO {
 		}
 		
 		public Subject findBySubjectInfo(int num) throws SQLException {
-			String sql = "select * from subjects where subjectNum = ?";
+			String sql = "select * from subject where subjectNum = ?";
 			try {
 				conn = getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -168,7 +168,7 @@ public class UploadDAO {
 		}
 		
 		public void addSubject(Subject subject) throws SQLException {
-			String sql = "insert into subjects(subjectName,subjectContent,userId,subjectReadcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
+			String sql = "insert into subject(subjectName,subjectContent,userId,subjectReadcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
 			try {
 				conn = getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -189,7 +189,7 @@ public class UploadDAO {
 		}
 		
 		public void removeSubject(int num) throws SQLException {
-			String sql = "delete from subjects where Num = ?";
+			String sql = "delete from subject where Num = ?";
 					
 			try {
 				conn = getConnection();
@@ -205,7 +205,7 @@ public class UploadDAO {
 		}
 		
 		public Subject viewSubject(int num) throws SQLException{
-			String sql = "select * from subjects where subjectNum = ?";
+			String sql = "select * from subject where subjectNum = ?";
 			Subject subject = new Subject();
 			try {
 				conn = getConnection();
@@ -233,7 +233,7 @@ public class UploadDAO {
 		}
 		
 		public void updateReadcont(int num) throws SQLException{
-			String sql = "update subjects set subjectReadcnt = subjectReadcnt + 1 where subjectNum = ?";
+			String sql = "update subject set subjectReadcnt = subjectReadcnt + 1 where subjectNum = ?";
 			conn = getConnection();
 			
 			try {
@@ -250,7 +250,7 @@ public class UploadDAO {
 		}
 		
 		public void updateSubject(Subject subject) throws SQLException {
-			String sql = "update subjects set subjectName = ?, subjectContent = ? subjectDate=? where subjectNum = ?";
+			String sql = "update subject set subjectName = ?, subjectContent = ? subjectDate=? where subjectNum = ?";
 					
 			conn = getConnection();
 			
@@ -298,7 +298,7 @@ public class UploadDAO {
 					try{
 						
 						conn=getConnection();
-						sql2="select subjectName from files join subjects on ? = subjects.subjectNum";
+						sql2="select subjectName from files join subject on ? = subject.subjectNum";
 						
 						if(userId.equals("master")){
 							sql="select * from files where subjectNum=?";

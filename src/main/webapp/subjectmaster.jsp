@@ -103,7 +103,6 @@
 	--%>
 	</SELECT>
 
-	<INPUT type="text" name="combo_nm" value="<%=checkyn[0]%>">
 	<input type="submit" value="삭제">
 	</form>
 	

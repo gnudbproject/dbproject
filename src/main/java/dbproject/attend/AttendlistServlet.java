@@ -25,6 +25,12 @@ public class AttendlistServlet extends HttpServlet{
 		HttpSession session = request.getSession();
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
+		boolean yn = false;
+		if(session.getAttribute("isMaster")!=null) {
+			yn = true;
+		}
+		
+		
 		String masterYN;
 		
 //		List list = new ArrayList();
@@ -62,7 +68,7 @@ public class AttendlistServlet extends HttpServlet{
 			cday = attendDao.getCday(allSubjectCount);
 			maxDay = attendDao.getMaxDay(allSubjectCount);
 			
-			if(userId.equals("master")){
+			if(yn){
 				masterYN = "/attendmaster.jsp";
 				
 				allAttendCount = attendDao.getAllAttendCount();

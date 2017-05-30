@@ -128,7 +128,11 @@
 				<div class="reName"><%=reBoard.getUserId() %></div>
 				<div class="reRe"><%=reBoard.getContent() %></div>	
 				
-			<%  if(request.getSession().getAttribute("userId").equals(reBoard.getUserId()) || (boolean)request.getSession().getAttribute("isMaster")==true){%>  <!-- 마스터 아이디는 모든댓글 삭제 가능 -->
+			<%
+			boolean yn=true;
+			if(request.getSession().getAttribute("isMaster")==null)
+				yn=false;
+			if(request.getSession().getAttribute("userId").equals(reBoard.getUserId()) || yn==true){%>  <!-- 마스터 아이디는 모든댓글 삭제 가능 -->
 				<div class="x"><input class="x" type="button" name="X" value="X" onclick="location.href='/board/removeReBoard?reNum=<%=reBoard.getNum() %>&bNum=<%=reBoard.getBoardNum() %>'" /></div>	
 	<%          }%>
 				

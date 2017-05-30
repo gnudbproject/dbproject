@@ -168,6 +168,30 @@ public class SubjectDAO {
 		}
 	}
 	
+	public void removeAttendSubject(String subjectName) throws SQLException{
+		String sql = "delete from attend where subjectname = ?";
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, subjectName);
+
+			pstmt.executeUpdate();
+		} finally {
+
+			if (conn != null) {
+				conn.close();
+			}
+
+			if (pstmt != null) {
+				pstmt.close();
+			}
+		}
+	}
+	
 	public String[] getCheckyn(int subjectCount) throws SQLException {
 		
 		String[] checkyn = new String[subjectCount];

@@ -62,7 +62,7 @@ public class BoardDAO {
 	
 	public int getListCount() throws SQLException {
 
-		String sql = "select count(*) from board";
+		String sql = "select count(*) from boards";
 		
 		int count = 0;
 		
@@ -90,7 +90,7 @@ public class BoardDAO {
 		List list = new ArrayList(); // 목록 리턴을 위한 변수
 		
 		// 목록를 조회하기 위한 쿼리
-		String sql = "select * from board order by re_ref desc, re_seq asc limit ?, ?"; 
+		String sql = "select * from boards order by re_ref desc, re_seq asc limit ?, ?"; 
 		
 		// 조회범위
 		int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
@@ -133,7 +133,7 @@ public class BoardDAO {
 	}
 	
 	public Board findByBoardInfo(int num) throws SQLException {
-		String sql = "select * from board where Num = ?";
+		String sql = "select * from boards where Num = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -153,7 +153,7 @@ public class BoardDAO {
 	}
 	
 	public void addBoard(Board board) throws SQLException {
-		String sql = "insert into board(Subject,Content,userId,Readcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
+		String sql = "insert into boards(Subject,Content,userId,Readcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -179,7 +179,7 @@ public class BoardDAO {
 	
 	
 	public void removeBoard(int num) throws SQLException {
-		String sql = "delete from board where Num = ?";
+		String sql = "delete from boards where Num = ?";
 				
 		try {
 			conn = getConnection();
@@ -195,7 +195,7 @@ public class BoardDAO {
 	}
 	
 	public Board viewBoard(int num) throws SQLException{
-		String sql = "select * from board where Num = ?";
+		String sql = "select * from boards where Num = ?";
 		Board board = new Board();
 		try {
 			conn = getConnection();
@@ -223,7 +223,7 @@ public class BoardDAO {
 	}
 	
 	public void updateReadcont(int num) throws SQLException{
-		String sql = "update board set Readcnt = Readcnt + 1 Where Num = ?";
+		String sql = "update boards set Readcnt = Readcnt + 1 Where Num = ?";
 		conn = getConnection();
 		
 		try {
@@ -240,7 +240,7 @@ public class BoardDAO {
 	}
 	
 	public void updateBoard(Board board) throws SQLException {
-		String sql = "update board set SubJect = ?, Content = ? Date=? where Num = ?";
+		String sql = "update boards set SubJect = ?, Content = ? Date=? where Num = ?";
 				
 		conn = getConnection();
 		
@@ -271,7 +271,7 @@ public class BoardDAO {
 		List<reBoardDTO> list = new ArrayList<reBoardDTO>(); // 목록 리턴을 위한 변수
 		
 		// 목록를 조회하기 위한 쿼리
-		String sql = "select * from reBoard where BoardNum = ?";
+		String sql = "select * from reBoard where boardNum = ?";
 			
 		try{
 			conn = getConnection();

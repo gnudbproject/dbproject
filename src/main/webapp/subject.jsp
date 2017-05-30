@@ -20,6 +20,11 @@
 	
 	String[] requestyn = new String[allSubjectCount];
 	requestyn = (String[])request.getAttribute("requestyn");
+	
+	for(int i = 0; i < subjectCount; i++) {
+		System.out.println(subjectName[i]);
+	}
+	
 %>
 	
 	
@@ -42,6 +47,16 @@
 	</tr>
 	<% 
 	for(int i = 0; i < allSubjectCount; i++) {
+		boolean yn = false;
+		for(int j = 0; j < subjectCount; j++) {
+			if(subjectName[j].equals(allSubjectName[i])) {
+				yn = true;
+				break;
+			}
+		}
+		if(yn) {
+			continue;
+		}
 		if(requestyn[i].equals("y")) {
 	%>
 	<form action="/subject/SubjectRequest" method="post">
@@ -55,8 +70,8 @@
 	</tr>
 	</form>
 	<%
+			}
 		}
-	}
 	%>
 	</table>
 	

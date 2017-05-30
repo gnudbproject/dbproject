@@ -23,6 +23,10 @@ public class SubjectlistServlet extends HttpServlet{
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		boolean yn = false;
+		if(session.getAttribute("isMaster")!=null) {
+			yn = true;
+		}
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
 		String masterYN;
@@ -49,7 +53,7 @@ public class SubjectlistServlet extends HttpServlet{
 			requestyn = subjectDAO.getRequestyn(allSubjectCount);
 			maxDay = subjectDAO.getMaxDay(allSubjectCount);
 			
-			if(userId.equals("master")){
+			if(yn){
 				masterYN = "/subjectmaster.jsp";
 //				stamp = new String[allSubjectCount];
 //				stamp = attendDao.getStamp(allSubjectCount);

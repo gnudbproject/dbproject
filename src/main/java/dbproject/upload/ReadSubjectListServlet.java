@@ -57,7 +57,7 @@ public class ReadSubjectListServlet extends HttpServlet{
 		request.setAttribute("count", listcount); 		// 게시물 총 개수
 		request.setAttribute("list", list);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/subject.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/homework.jsp");
 		rd.forward(request, response);
 	
 		} catch (SQLException e) {

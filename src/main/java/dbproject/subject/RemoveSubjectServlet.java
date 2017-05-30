@@ -37,6 +37,7 @@ public class RemoveSubjectServlet extends HttpServlet {
 		
 		try {
 			subjectDAO.removeSubject(subjectName);
+			subjectDAO.removeAttendSubject(subjectName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

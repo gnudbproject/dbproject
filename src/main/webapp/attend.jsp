@@ -144,14 +144,13 @@
 	--%>
 	</SELECT>
 
-	<INPUT type="text" name="combo_nm">
 	<input type="button" value="조회" onclick="choice()">
 	</form>
 	
 	<br>
 	
 	<form name = "frm2">
-	<textarea name = "txt" rows="40" cols="40">hello, world!</textarea>
+	<textarea name = "txt" rows="40" cols="40"></textarea>
 	</form>
 	
 	</div>

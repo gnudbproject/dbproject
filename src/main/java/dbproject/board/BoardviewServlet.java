@@ -58,11 +58,11 @@ public class BoardviewServlet extends HttpServlet {
 			
 			req.setAttribute("isView", true);
 			req.setAttribute("board", board);
-			
+			logger.debug("확인");
 			req.setAttribute("list", list); //추가 sh
 			req.setAttribute("isCreate", false);//추가 sh
 
-
+			logger.debug("확인2");
 			
 			
 			// 이곳에 댓글 정보도

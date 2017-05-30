@@ -208,7 +208,7 @@
 	<br><br>
 	
 	<form name = "frm2">
-	<textarea name = "txt" rows="40" cols="40">hello, world!</textarea>
+	<textarea name = "txt" rows="40" cols="40"></textarea>
 	</form>
 	
 	</div>
