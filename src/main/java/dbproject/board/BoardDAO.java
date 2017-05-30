@@ -7,9 +7,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -153,31 +153,18 @@ public class BoardDAO {
 	}
 	
 	public void addBoard(Board board) throws SQLException {
-		String sql = "insert into board values(?,?,?,?,?,?,?,?,?,?)";
-		int num = 0;
-		
+		String sql = "insert into board(Subject,Content,userId,Readcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select max(Num) from board");
-			ResultSet rs = pstmt.executeQuery();
-			
-			if(rs.next())
-				num = rs.getInt(1)+1;
-			else
-				num = 1;
-			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, num);
-			pstmt.setString(2, board.getSubject());
-			pstmt.setString(3, board.getContent());
-			pstmt.setString(4, board.getUserId());
-			pstmt.setString(5, board.getPassword());
-			pstmt.setInt(6, board.getReadcnt());
-			pstmt.setDate(7, board.getDate());
-			pstmt.setInt(8, board.getRe_ref());
-			pstmt.setInt(9, board.getRe_lev());
-			pstmt.setInt(10, board.getRe_seq());
+			pstmt.setString(1, board.getSubject());
+			pstmt.setString(2, board.getContent());
+			pstmt.setString(3, board.getUserId());
+			pstmt.setInt(4, board.getReadcnt());
+			pstmt.setInt(5, board.getRe_ref());
+			pstmt.setInt(6, board.getRe_lev());
+			pstmt.setInt(7, board.getRe_seq());
 
 			pstmt.executeUpdate();
 
@@ -221,7 +208,6 @@ public class BoardDAO {
 				board.setSubject( rs.getString("SubJect") );
 				board.setContent( rs.getString("Content") );
 				board.setUserId( rs.getString("UserId") );
-				board.setPassword( rs.getString("Password") );
 				board.setReadcnt( rs.getInt("Readcnt") );
 				board.setDate( rs.getDate("Date") );
 				board.setRe_lev( rs.getInt("re_ref") );
@@ -254,16 +240,17 @@ public class BoardDAO {
 	}
 	
 	public void updateBoard(Board board) throws SQLException {
-		String sql = "update board set SubJect = ?, Content = ? where Num = ?";
+		String sql = "update board set SubJect = ?, Content = ? Date=? where Num = ?";
 				
 		conn = getConnection();
 		
+		Timestamp date=new Timestamp(new Date().getTime());
 		try {
-			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getSubject());
 			pstmt.setString(2, board.getContent());
 			pstmt.setInt(3, board.getNum());
+			pstmt.setTimestamp(4, date);
 			
 			pstmt.execute();
 			logger.debug("UpdateBoard : " + board);
@@ -374,14 +361,6 @@ public class BoardDAO {
 		} finally {
 			SourceReturn();
 		}
-	}
-	public void addFile(String File_Path,String Author)throws SQLException{
-		String sql="insert into Files(File_Path,Author) values(?,?)";
-		conn=getConnection();
-		pstmt=conn.prepareStatement(sql);
-		pstmt.setString(1, File_Path);
-		pstmt.setString(2, Author);
-		pstmt.executeUpdate();
 	}
 	
 }

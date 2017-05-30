@@ -27,7 +27,6 @@ public class BoardviewServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-		UserDAO userDao = new UserDAO();
 		BoardDAO boardDao = new BoardDAO();
 		Board board = new Board();
 		

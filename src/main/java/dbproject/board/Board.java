@@ -7,7 +7,6 @@ public class Board {
 	private String subject;
 	private String content;
 	private String userId;
-	private String password;
 	private Date date;
 	private int readcnt;
 	private int num;
@@ -72,13 +71,6 @@ public class Board {
 		this.userId = userId;
 	}
 	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	
 	public Date getDate() {
 		return date;
@@ -103,10 +95,13 @@ public class Board {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	
-	public String toString() {
-		return "Board [subject=" + subject + ", content=" + content + ", userId=" + userId + ", password=" + password
-				+ ", date=" + date + ", readcnt=" + readcnt + ", num=" + num + "]";
-	}
 
+	@Override
+	public String toString() {
+		return "Board [subject=" + subject + ", content=" + content + ", userId=" + userId + ", date=" + date
+				+ ", readcnt=" + readcnt + ", num=" + num + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq="
+				+ re_seq + "]";
+	}
+	
+	
 }

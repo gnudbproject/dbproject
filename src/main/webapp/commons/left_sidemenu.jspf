@@ -7,7 +7,7 @@
 			<li><a href="/board/Boardlist">게시판</a> </li>
 			<li><a href="/visitorsnotes">방명록</a></li>			
 			<li><a href="#">출석체크</a></li>
-			<li><a href="/upload.jsp">과제제출</a></li>
+			<li><a href="/subjects/subjectList">과제제출</a></li>
 			
 		</ul>
 	</div>

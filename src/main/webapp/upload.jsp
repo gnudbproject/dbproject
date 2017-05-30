@@ -16,10 +16,10 @@
 <body>
 	
 	<h1>파일첨부</h1>
-	<form action="/Upload" method="post" enctype="multipart/form-data">
-
+	<form action="/Upload?subjectNum=${param.subjectNum }" method="post" enctype="multipart/form-data">
+		
 		첨부파일:<input type="file" name="s_file"/><br/>
-		<input type="submit" value="보내기"/>
+		<input type="submit" value="과제 제출"/>
 
 	</form>
 

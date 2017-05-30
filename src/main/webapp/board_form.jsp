@@ -51,6 +51,9 @@
 			<tr>
 				<td width="70" align="center">USER</td>
 				<td width="330">
+				<c:if test="${isCreate}">
+					<input type="hidden" name="userId" value="${userId}" /> ${userId}</td>
+				</c:if>
 				<input type="hidden" name="userId" value="${board.userId}" /> ${board.userId}</td>
 			</tr>
 			<tr>
@@ -87,7 +90,7 @@
 				</c:if>
 			
 				<c:if test = "${isUser==true||isMaster==true}">  <!-- master아이디는 모든 게시물 수정삭제 가능 -->
-				<input type="button" name="delete"  value="Delete" onclick="location.href='/card/removecard?num=${card.num}'" />
+				<input type="button" name="delete"  value="Delete" onclick="location.href='/board/removeBoard?num=${board.num}'" />
 				<input type="submit" name="modify" value="Modify"/>
 				</c:if>
 			</c:when>

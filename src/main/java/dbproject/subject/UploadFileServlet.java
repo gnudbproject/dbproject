@@ -1,4 +1,4 @@
-package dbproject.board;
+package dbproject.subject;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -17,8 +20,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 @WebServlet("/Upload")
 public class UploadFileServlet extends HttpServlet {
-	
-
+		public static Logger logger =LoggerFactory.getLogger(UploadFileServlet.class);
+		
 		@Override
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// 첨부된 파일을 받아서 올리는데 목적이 있다.
@@ -51,15 +54,16 @@ public class UploadFileServlet extends HttpServlet {
 
 			
 			HttpSession session=request.getSession();
-			BoardDAO boardDao=new BoardDAO();
+			SubjectDAO subjectDao=new SubjectDAO();
+			System.out.println("getParameter:"+mr.getParameter("subjectNum"));
 			try {
-				boardDao.addFile("/upload/"+mr.getFile("s_file").getName(), (String)session.getAttribute("userId")); //형근: 파라메터로 전달한 파일이름과 세션에 저장되있는 사용자 Id와 프로젝트 이름 전달 
+				subjectDao.addFile("/upload/"  ,mr.getFile("s_file").getName(), (String)session.getAttribute("userId"),Integer.parseInt(mr.getParameter("subjectNum"))); //형근: 파라메터로 전달한 파일이름과 세션에 저장되있는 사용자 Id와 프로젝트 이름 전달 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.debug("UploadFileSerlvet error:"+e.getMessage());
 			}
 			
-			
+			response.sendRedirect("subjects/subjectList");
 			
 			// 형근: 아래 주석 업로드한 파일명이 겹칠경우 원래 파일명과 함께 맞는지 확인하기 위한 코드
 //			File s_file = mr.getFile("s_file"); // 업로드 후에 파일객체 반환!

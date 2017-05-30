@@ -21,7 +21,6 @@ public class CreateBoardServlet extends HttpServlet{
 		String subject = req.getParameter("subject");
 		String content = req.getParameter("content");
 		String userId = req.getParameter("userId");
-		String password = req.getParameter("password");
 		
 		Board board = new Board(subject, content, userId);
 	

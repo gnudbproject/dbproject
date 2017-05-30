@@ -7,10 +7,10 @@
 		</encoder>
 	</appender>
 
-	<logger name="viser" level="DEBUG" />
+	<logger name="dbproject" level="DEBUG" />
 
 
-	<root level="WARN">
+	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration> 
