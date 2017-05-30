@@ -1,4 +1,4 @@
-package dbproject.subject;
+package dbproject.upload;
 
 import java.io.IOException;
 
@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import dbproject.subject.SubjectDAO;
 
 @WebServlet("/subjects/updateSubject")
 public class UpdateSubjectServlet extends HttpServlet {
@@ -30,11 +32,11 @@ public class UpdateSubjectServlet extends HttpServlet {
 		subject.setSubjectName(subjectName);
 		subject.setSubjectContent(content);
 		
-		SubjectDAO subjectDao = new SubjectDAO();
+		UploadDAO uploadDao = new UploadDAO();
 		
 		try {
 			logger.debug("테스트 : " + subject);
-			subjectDao.updateSubject(subject);
+			uploadDao.updateSubject(subject);
 			resp.sendRedirect("/subjects/subjectList");
 		} catch (Exception e) {
 			logger.debug("updateSubject Servlet error" + e);

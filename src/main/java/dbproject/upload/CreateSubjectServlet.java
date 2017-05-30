@@ -1,4 +1,4 @@
-package dbproject.subject;
+package dbproject.upload;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dbproject.subject.SubjectDAO;
+
 @WebServlet("/subjects/createSubject")
 public class CreateSubjectServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SubjectDAO subjectDao = new SubjectDAO();
+		UploadDAO uploadDao = new UploadDAO();
 		request.setCharacterEncoding("UTF-8");
 		String subjectName = request.getParameter("subject");
 		String content = request.getParameter("content");
@@ -24,7 +26,7 @@ public class CreateSubjectServlet extends HttpServlet{
 	
 		try {
 		
-		subjectDao.addSubject(subject);
+			uploadDao.addSubject(subject);
 		} catch (SQLException e) {
 			System.out.println(e);
 		}

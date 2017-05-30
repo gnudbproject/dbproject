@@ -1,15 +1,6 @@
-package dbproject.subject;
+package dbproject.attend;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/subject/removeSubject")
-public class RemoveSubjectServlet extends HttpServlet {
+@WebServlet("/attend/ChangeCheckyn")
+public class ChangeCheckServlet extends HttpServlet {
 	
 	public static final String SESSION_USER_ID = "userId";
 
@@ -30,26 +21,49 @@ public class RemoveSubjectServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		SubjectDAO subjectDAO = new SubjectDAO();
+		AttendDAO attendDAO = new AttendDAO();
 		
 //		String userId = request.getParameter(SESSION_USER_ID);
-		String subjectName = request.getParameter("subjectNameList");
+		String subjectName = request.getParameter("subjectName");
+		String checkyn = request.getParameter("checkyn");
+		String changeyn;
+		if(checkyn.equals("n")) {
+			changeyn = "y";
+		}
+		else {
+			changeyn = "n";
+		}
+		int cday = Integer.parseInt(request.getParameter("cday"));
+		int maxDay = Integer.parseInt(request.getParameter("maxDay"));
+		if(cday > maxDay) {
+			cday = 0;
+		}
+		else if(cday < 0) {
+			cday = maxDay;
+		}
 		
 		try {
-			subjectDAO.removeSubject(subjectName);
+			attendDAO.setCheckyn(subjectName, changeyn);
+			attendDAO.setCday(subjectName, cday);
+			attendDAO.setAttendyn(subjectName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("/subject/Subjectlist");
+//		System.out.println(subjectName);
+//		System.out.println(checkyn);
+//		System.out.println(changeyn);
+//		System.out.println(cday);
+		
+		response.sendRedirect("/attend/Attendlist");
 		
 	}
 
 	private void errorForward(HttpServletRequest request, HttpServletResponse response, String errorMessage)
 		throws ServletException, IOException {
 			request.setAttribute("errorMessage", errorMessage);
-			RequestDispatcher rd = request.getRequestDispatcher("/subject/Subjectlist");
+			RequestDispatcher rd = request.getRequestDispatcher("/attend/Attendlist");
 			rd.forward(request, response);
 		}
 

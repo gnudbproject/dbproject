@@ -1,15 +1,6 @@
 package dbproject.subject;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,27 +11,45 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/subject/removeSubject")
-public class RemoveSubjectServlet extends HttpServlet {
+import dbproject.user.LoginServlet;
+import dbproject.user.SessionUtils;
+
+@WebServlet("/subject/ChangeRequestyn")
+public class ChangeRequestynServlet extends HttpServlet {
 	
-	public static final String SESSION_USER_ID = "userId";
+//	public static final String SESSION_USER_ID = "userId";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+//		HttpSession session = request.getSession();
 		
 		SubjectDAO subjectDAO = new SubjectDAO();
 		
-//		String userId = request.getParameter(SESSION_USER_ID);
-		String subjectName = request.getParameter("subjectNameList");
+//		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
+		String subjectName = request.getParameter("subjectName");
+		String requestyn = request.getParameter("requestyn");
+		String changeyn;
+		if(requestyn.equals("n")) {
+			changeyn = "y";
+		}
+		else {
+			changeyn = "n";
+		}
 		
 		try {
-			subjectDAO.removeSubject(subjectName);
+			subjectDAO.setRequestyn(subjectName, changeyn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+//		System.out.println(subjectName);
+//		System.out.println(checkyn);
+//		System.out.println(changeyn);
+//		System.out.println(cday);
 		
 		response.sendRedirect("/subject/Subjectlist");
 		

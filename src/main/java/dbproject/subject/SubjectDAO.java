@@ -7,9 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,18 +15,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dbproject.board.Board;
-import dbproject.board.BoardDAO;
+import dbproject.user.User;
 import dbproject.user.UserDAO;
 
 public class SubjectDAO {
-private static final Logger logger = LoggerFactory.getLogger(SubjectDAO.class);
+	private static final Logger logger = LoggerFactory.getLogger(SubjectDAO.class);
 	
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	PreparedStatement pstmt2 = null;
-	ResultSet rs2 = null;
 	
 	public void SourceReturn() throws SQLException {
 		
@@ -41,17 +37,12 @@ private static final Logger logger = LoggerFactory.getLogger(SubjectDAO.class);
 		if(this.rs != null) {
 			rs.close();
 		}
-		if(this.pstmt2 != null) {
-			pstmt2.close();
-		}
-		if(this.rs2 != null) {
-			rs2.close();
-		}
 		
 	}
+	
 	public Connection getConnection() throws SQLException {
 		Properties props = new Properties();
-		InputStream in = SubjectDAO.class.getResourceAsStream("/db.properties");
+		InputStream in = UserDAO.class.getResourceAsStream("/db.properties");
 		try {
 			props.load(in);
 			in.close();
@@ -72,16 +63,46 @@ private static final Logger logger = LoggerFactory.getLogger(SubjectDAO.class);
 		}
 	}
 	
-	public int getListCount() throws SQLException {
+	public void addSubject(String subjectName, int day) throws SQLException{
+		String sql = "insert into subjects values(?,?,'n','n',0)";
 
-		String sql = "select count(*) from subjects";
+		// null 로 초기화
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		// JDBC 리소스 반환
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, subjectName);
+			pstmt.setInt(2, day);
+
+			pstmt.executeUpdate();
+
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
+	public int getAllSubjectCount() throws SQLException {
+
+		String sql = "select count(*) from subjects"; 
 		
 		int count = 0;
 		
 		try {
 			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery(); // 쿼리 실행 
 			
 			if(rs.next()) {
 				count = rs.getInt(1);
@@ -97,245 +118,322 @@ private static final Logger logger = LoggerFactory.getLogger(SubjectDAO.class);
 		return count;
 	}
 	
-	public List getSubjectList (int page, int limit) throws SQLException{
+	public String[] getAllSubjectName(int subjectCount) throws SQLException {
 		
-		List list = new ArrayList(); // 목록 리턴을 위한 변수
+		String[] subjectName = new String[subjectCount];
 		
-		// 목록를 조회하기 위한 쿼리
-		String sql = "select * from subjects order by re_ref desc, re_seq asc limit ?, ?"; 
-		
-		// 조회범위
-		int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
-		int endrow = limit;  			 // ex ) limit 만큼 리스트에 나열
+		String sql = "select * from subjects";
 		
 		try{
 			conn = getConnection();
 			// 실행을 위한 쿼리 및 파라미터 저장
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, startrow);
-			pstmt.setInt(2, endrow);
+			int temp = 0;
 			
 			rs = pstmt.executeQuery(); // 쿼리 실행 
 			
-			while(rs.next()){
-				Subject subject = new Subject();
-				subject.setSubjectNum(rs.getInt("subjectNum"));
-				subject.setUserId(rs.getString("userId"));
-				subject.setSubjectName(rs.getString("subjectName"));
-				subject.setSubjectContent(rs.getString("subjectContent"));
-				subject.setSubjectReadCnt(rs.getInt("subjectReadcnt"));
-				subject.setSubjectDate(rs.getDate("subjectDate"));
-				subject.setRe_ref(rs.getInt("re_ref"));
-				subject.setRe_lev(rs.getInt("re_lev"));
-				subject.setRe_seq(rs.getInt("re_seq"));
-				
-				list.add(subject); // 행을 하나씩 리스트에 추가
+			while(rs.next()) {
+				subjectName[temp] = rs.getString("subjectname");
+				temp++;
 			}
-			return list;
 			
-		}catch(Exception e){
-			logger.debug("getBoardList Error : "+ e );
 		}
-		
-		finally{ // DB 관련들 객체를 종료
-			SourceReturn();
+		catch(Exception e){
+			logger.debug("get Error : "+ e );
 		}
-		
-		return null;
+		return subjectName;
 	}
 	
-	public Subject findBySubjectInfo(int num) throws SQLException {
-		String sql = "select * from subjects where subjectNum = ?";
+	public void removeSubject(String subjectName) throws SQLException{
+		String sql = "delete from subjects where subjectname = ?";
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
+			pstmt.setString(1, subjectName);
 
-			rs = pstmt.executeQuery(); // 결과를 받아와 저장
+			pstmt.executeUpdate();
+		} finally {
 
-			if (!rs.next()) {
-				return null;
+			if (conn != null) {
+				conn.close();
 			}
 
-			return new Subject(rs.getString("subjectName"), rs.getString("subjectContent"), rs.getString("userId"));
-
-		} finally {
-			SourceReturn();
-		}
-	}
-	
-	public void addSubject(Subject subject) throws SQLException {
-		String sql = "insert into subjects(subjectName,subjectContent,userId,subjectReadcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, subject.getSubjectName());
-			pstmt.setString(2, subject.getSubjectContent());
-			pstmt.setString(3, subject.getUserId());
-			pstmt.setInt(4, subject.getSubjectReadCnt());
-			pstmt.setInt(5, subject.getRe_ref());
-			pstmt.setInt(6, subject.getRe_lev());
-			pstmt.setInt(7, subject.getRe_seq());
-			
-			pstmt.executeUpdate();
-
-		} finally {
-			SourceReturn();
-		}
-	}
-	
-	public void removeSubject(int num) throws SQLException {
-		String sql = "delete from subjects where Num = ?";
-				
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, num);
-			
-			pstmt.executeUpdate();
-			
-		} finally {
-			SourceReturn();
-		}
-	}
-	
-	public Subject viewSubject(int num) throws SQLException{
-		String sql = "select * from subjects where subjectNum = ?";
-		Subject subject = new Subject();
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				subject.setSubjectNum( rs.getInt("subjectNum") );
-				subject.setSubjectName( rs.getString("subjectName") );
-				subject.setSubjectContent( rs.getString("subjectContent") );
-				subject.setUserId( rs.getString("userId") );
-				subject.setSubjectReadCnt( rs.getInt("subjectReadcnt") );
-				subject.setSubjectDate( rs.getDate("subjectDate") );
-				subject.setRe_lev( rs.getInt("re_ref") );
-				subject.setRe_ref( rs.getInt("re_ref") );
-				subject.setRe_seq( rs.getInt("re_seq") );
+			if (pstmt != null) {
+				pstmt.close();
 			}
-		} catch (Exception e) {
-			logger.debug("viewSubject error:"+e.getMessage());
-		} finally {
-			SourceReturn();
 		}
-		return subject;
 	}
 	
-	public void updateReadcont(int num) throws SQLException{
-		String sql = "update subjects set subjectReadcnt = subjectReadcnt + 1 where subjectNum = ?";
-		conn = getConnection();
+	public String[] getCheckyn(int subjectCount) throws SQLException {
 		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			logger.debug("updateReadcont error : " + e);
-		} finally {
-			SourceReturn();
-		}
-	}
-	
-	public void updateSubject(Subject subject) throws SQLException {
-		String sql = "update subjects set subjectName = ?, subjectContent = ? subjectDate=? where subjectNum = ?";
-				
-		conn = getConnection();
+		String[] checkyn = new String[subjectCount];
 		
-		Timestamp date=new Timestamp(new Date().getTime());
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, subject.getSubjectName());
-			pstmt.setString(2, subject.getSubjectContent());
-			pstmt.setTimestamp(3, date);
-			pstmt.setInt(4, subject.getSubjectNum());
-			
-			pstmt.execute();
-			logger.debug("UpdateSubject : " + subject);
-		} catch (Exception e) {
-			logger.debug("UpdateSubject error : " + e);
-			logger.debug(subject + "");
-		} finally {
-			SourceReturn();
-		}
-	}
-	
-	
-	public void addFile(String File_Path,String File_Name,String Author,int subjectNum) throws SQLException{
-		String sql="insert into Files(File_Path,File_Name,Author,subjectNum) values(?,?,?,?)";
+		String sql = "select * from subjects";
+		
 		try{
-		conn=getConnection();
-		pstmt=conn.prepareStatement(sql);
-		pstmt.setString(1, File_Path);
-		pstmt.setString(2, File_Name);
-		pstmt.setString(3, Author);
-		pstmt.setInt(4, subjectNum);
-		pstmt.executeUpdate();
-		}catch(SQLException e){
-			logger.debug("addFile error:"+e.getMessage());
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			int temp = 0;
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			while(rs.next()) {
+				checkyn[temp] = rs.getString("checkyn");
+				temp++;
+			}
+			
 		}
-		finally{
-		SourceReturn();
+		catch(Exception e){
+			logger.debug("get Error : "+ e );
 		}
+		return checkyn;
 	}
 	
-	public List getUploadList (String userId,int subjectNum) throws SQLException{
-		String sql,sql2;	
-		List list = new ArrayList(); // 목록 리턴을 위한 변수
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public int getSubjectCount(String userId) throws SQLException {
+
+		String sql = "select count(*) from attend where userid = ?"; 
 		
-				try{
-					
-					conn=getConnection();
-					sql2="select subjectName from files join subjects on ? = subjects.subjectNum";
-					
-					if(userId.equals("master")){
-						sql="select * from files where subjectNum=?";
-						pstmt=conn.prepareStatement(sql);
-						pstmt.setInt(1,subjectNum );
-						pstmt2=conn.prepareStatement(sql2);
-						
-					}
-					else{
-						sql="select * from files where Author=? AND subjectNum=?";
-						pstmt=conn.prepareStatement(sql);
-						pstmt.setString(1, userId);
-						pstmt.setInt(2, subjectNum);
-						pstmt2=conn.prepareStatement(sql2);
-					}
-					rs=pstmt.executeQuery();
-					while(rs.next()){
-						File file=new File();
-						file.setFileNum(rs.getInt("File_Num"));
-						file.setFilePath(rs.getString("File_Path"));
-						file.setFileName(rs.getString("File_Name"));
-						file.setUploadTime(rs.getDate("Upload_Time"));
-						file.setAuthor(rs.getString("Author"));
-						file.setSubjectNum(rs.getInt("subjectNum"));
-						pstmt2.setInt(1, rs.getInt("subjectNum"));  // subjectNum을 이용하여 subjectName을 찾는다.
-						rs2=pstmt2.executeQuery();
-						while(rs2.next()){
-							file.setSubjectName(rs2.getString("subjectName"));
-						}
-						list.add(file);
-						}
-					return list;
+		int count = 0;
+		
+		try {
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
 			}
-			catch(SQLException e){
-				logger.debug("getUploadList error:"+e.getMessage());
-			}
-			finally{
+			
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
+		finally {
 				SourceReturn();
+		}
+		
+		return count;
+	}
+	
+	public String[] getSubjectName(int subjectCount, String userId) throws SQLException {
+		
+		String[] subjectName = new String[subjectCount];
+		
+		String sql = "select * from attend where userid = ?";
+		
+		
+		try{
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			int temp = 0;
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			while(rs.next()) {
+				subjectName[temp] = rs.getString("subjectname");
+				temp++;
 			}
-		return null;
+			
+		}
+		catch(Exception e){
+			logger.debug("get Error : "+ e );
+		}
+		return subjectName;
+	}
+	
+	public String[] getStamp(int subjectCount, String userId) throws SQLException {
+		
+		String[] stamp = new String[subjectCount];
+		
+		String sql = "select * from attend where userid = ?";
+		
+		
+		try{
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			int temp = 0;
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			while(rs.next()) {
+				stamp[temp] = rs.getString("stamp");
+				temp++;
+			}
+			
+		}
+		catch(Exception e){
+			logger.debug("get Error : "+ e );
+		}
+		return stamp;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	public int getRequestynCount() throws SQLException {
+//
+//		String sql = "select count(*) from subjects where requestyn = 'y'"; 
+//		
+//		int count = 0;
+//		
+//		try {
+//			conn = getConnection();
+//			// 실행을 위한 쿼리 및 파라미터 저장
+//			pstmt = conn.prepareStatement(sql);
+//			
+//			rs = pstmt.executeQuery(); // 쿼리 실행 
+//			
+//			if(rs.next()) {
+//				count = rs.getInt(1);
+//			}
+//			
+//		} catch (Exception e) {
+//			logger.debug(e.getMessage());
+//		}
+//		finally {
+//				SourceReturn();
+//		}
+//		
+//		return count;
+//	}
+	
+	public String[] getRequestyn(int allSubjectCount) throws SQLException {
+		
+		String[] requestyn = new String[allSubjectCount];
+		
+		String sql = "select * from subjects";
+		
+		
+		try{
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			
+			int temp = 0;
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			while(rs.next()) {
+				requestyn[temp] = rs.getString("requestyn");
+				temp++;
+			}
+			
+		}
+		catch(Exception e){
+			logger.debug("get Error : "+ e );
+		}
+		return requestyn;
+	}
+	
+	public void setRequestyn(String subjectName, String changeyn) throws SQLException {
+		
+		String sql = "update subjects set requestyn = ? where subjectname = ?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, changeyn);
+			pstmt.setString(2, subjectName);
+
+			pstmt.executeUpdate();
+
+		} finally {
+			SourceReturn();
+		}
+		
+	}
+	
+	public String[] getMaxDay(int subjectCount) throws SQLException {
+		
+		String[] maxDay = new String[subjectCount];
+		
+		String sql = "select * from subjects";
+		
+		try{
+			conn = getConnection();
+			// 실행을 위한 쿼리 및 파라미터 저장
+			pstmt = conn.prepareStatement(sql);
+			int temp = 0;
+			
+			rs = pstmt.executeQuery(); // 쿼리 실행 
+			
+			while(rs.next()) {
+				maxDay[temp] = rs.getString("day");
+				temp++;
+			}
+			
+		}
+		catch(Exception e){
+			logger.debug("get Error : "+ e );
+		}
+		return maxDay;
+	}
+	
+	public void subjectRequest(String userId, String subjectName, String stamp) throws SQLException{
+		String sql = "insert into attend values(?,?,?,'n')";
+
+		// null 로 초기화
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		// JDBC 리소스 반환
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, subjectName);
+			pstmt.setString(3, stamp);
+			
+			pstmt.executeUpdate();
+
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+		}
 	}
 	
 }

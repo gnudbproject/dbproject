@@ -1,4 +1,4 @@
-package dbproject.subject;
+package dbproject.upload;
 
 import java.io.IOException;
 import java.sql.SQLException;

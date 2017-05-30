@@ -9,5 +9,7 @@
 			<li><a href="#">출석체크</a></li>
 			<li><a href="/subjects/subjectList">과제제출</a></li>
 			
+			<li><a href="/attend/Attendlist">출석체크</a></li>
+			<li><a href="/subject/Subjectlist">과목정보</a></li>
 		</ul>
 	</div>

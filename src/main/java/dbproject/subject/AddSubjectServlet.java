@@ -1,15 +1,6 @@
 package dbproject.subject;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/subject/removeSubject")
-public class RemoveSubjectServlet extends HttpServlet {
+@WebServlet("/subject/AddSubject")
+public class AddSubjectServlet extends HttpServlet {
 	
 	public static final String SESSION_USER_ID = "userId";
 
@@ -33,10 +24,11 @@ public class RemoveSubjectServlet extends HttpServlet {
 		SubjectDAO subjectDAO = new SubjectDAO();
 		
 //		String userId = request.getParameter(SESSION_USER_ID);
-		String subjectName = request.getParameter("subjectNameList");
+		String subjectName = request.getParameter("subjectName");
+		int day = Integer.parseInt(request.getParameter("day"));
 		
 		try {
-			subjectDAO.removeSubject(subjectName);
+			subjectDAO.addSubject(subjectName, day);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

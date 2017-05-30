@@ -1,15 +1,6 @@
 package dbproject.subject;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,27 +11,44 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/subject/removeSubject")
-public class RemoveSubjectServlet extends HttpServlet {
+import dbproject.user.LoginServlet;
+import dbproject.user.SessionUtils;
+
+@WebServlet("/subject/SubjectRequest")
+public class SubjectRequestServlet extends HttpServlet {
 	
 	public static final String SESSION_USER_ID = "userId";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		
 		SubjectDAO subjectDAO = new SubjectDAO();
 		
-//		String userId = request.getParameter(SESSION_USER_ID);
-		String subjectName = request.getParameter("subjectNameList");
+		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
+		String subjectName = request.getParameter("subjectName");
+		int maxDay = Integer.parseInt(request.getParameter("maxDay"));
+		
+		String stamp = "";
+		
+		for(int i = 0; i < maxDay; i++) {
+			stamp = stamp + "0";
+		}
+		
 		
 		try {
-			subjectDAO.removeSubject(subjectName);
+			subjectDAO.subjectRequest(userId, subjectName, stamp);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+//		System.out.println(subjectName);
+//		System.out.println(maxDay);
+//		System.out.println(stamp);
 		
 		response.sendRedirect("/subject/Subjectlist");
 		

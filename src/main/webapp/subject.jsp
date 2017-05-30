@@ -1,107 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.text.SimpleDateFormat"%>
-<%@ page import="dbproject.subject.*"%>
 
-<%
-	List list=(List)request.getAttribute("list");
-	int count=((Integer)request.getAttribute("count")).intValue();
-	int nowpage=((Integer)request.getAttribute("page")).intValue();
-	int maxpage=((Integer)request.getAttribute("maxpage")).intValue();
-	int startpage=((Integer)request.getAttribute("startpage")).intValue();
-	int endpage=((Integer)request.getAttribute("endpage")).intValue();
+	pageEncoding="UTF-8"%>
+<% 
+
+
+	int subjectCount=((Integer)request.getAttribute("subjectCount")).intValue();
+	String[] subjectName = new String[subjectCount];
+	subjectName = (String[])request.getAttribute("subjectName");
+	
+	int allSubjectCount=((Integer)request.getAttribute("allSubjectCount")).intValue();
+	String[] allSubjectName = new String[allSubjectCount];
+	allSubjectName = (String[])request.getAttribute("allSubjectName");
+	
+	String[] stamp = new String[subjectCount];
+	stamp = (String[])request.getAttribute("stamp");
+	
+	String[] maxDay = new String[allSubjectCount];
+	maxDay = (String[])request.getAttribute("maxDay");
+	
+	String[] requestyn = new String[allSubjectCount];
+	requestyn = (String[])request.getAttribute("requestyn");
 %>
-
+	
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>board</title>
-<link href="/stylesheets/board.css?v=1" rel="stylesheet" type="text/css">
 <%@ include file="./commons/top.jspf"%>
+<title>Main.jsp</title>
 </head>
 <body>
-		<%@ include file="./commons/left_sidemenu.jspf"%>
-	<div id="container">
-		<div id="top">
-			<div id="top_header">과제목록</div>
-		</div>
+	<%@ include file="./commons/left_sidemenu.jspf"%>
+	<div id=main_content>
 
-		<div id="subject-container">
-			<div id="subject-header">
-				<table border="1px" cellpadding="0" cellspacing="0" align="center">
-					<tr height="30">
-						<!-- BOARD LIST -->
-						<td align="center" width="100">NUM</td>
-						<td align="center" width="600">SUBJECT</td>
-						<td align="center" width="150">USER</td>
-						<td align="center" width="150">DATE</td>
-						<td align="center" width="100">READCOUNT</td>
-					</tr>
-
-		<%
-			if(list.size() > 0){
-				for(int i=0 ; i < list.size(); i++){
-					Subject subject = (Subject)list.get(i); // LIST를 BoradBean 타입으로 변환
-		%>
-
-					<tr height="50">
-						<td align="center"><%=i+1 %></td>
-						<td>
-							<%if(subject.getRe_lev()!=0){ %> 
-							<%for(int a=0;a<=subject.getRe_lev()*2;a++){ %>
-							&nbsp; <%} %> 
-						
-							<%}else{ %>
-							<%} %> 
-						<a href="/subjects/viewSubject?num=<%=subject.getSubjectNum()%>&index=<%=i+1 %>&subject_userId=<%=subject.getUserId()%>"> 
-						<%=subject.getSubjectName()%>
-						</a>
-						</td>
-						<td align="center"><%=subject.getUserId() %></td>
-						<td align="center"><%=subject.getSubjectDate().toString() %></td>
-						<td align="center"><%=subject.getSubjectReadCnt() %></td>
-					</tr>
-			<%	
-				}
-			}else{	
-			%>
-					<tr height="100">
-						<td colspan="5" align="center">NO DATA.</td>
-					</tr>
-					<%
-			}
-			%>
-					<tr height="70">
-						<!-- BOARD PAGING -->
-						<td colspan="7" align="center">
-							<%if(nowpage<=1){ %> [PREV]&nbsp; 
-							
-							<%}else{ %> 
-							<a href="/subjects/subjectList?page=<%=nowpage-1 %>">[PREV]</a>&nbsp; 
-							<%} %>
-
-						<%for(int a=startpage;a<=endpage;a++){
-							if(a==nowpage){%> [<%=a %>] 
-						
-							<%}else{ %> 
-							<a href="/subjects/subjectList?page=<%=a %>">[<%=a%>]
-							</a>&nbsp; <%} %> <%} %> <%if(nowpage>=maxpage){ %> [NEXT] <%}
-							else{ %> 
-							<a	href="/subjects/subjectList?page=<%=nowpage+1 %>">[NEXT]</a> 
-							<%}%>
-							</td>
-				</table>
-			</div>
-		</div>
-
-		<div id="subject-footer">
-			<c:if test="${isMaster }">
-				<button id="subject-button" onclick="location.href='/subjects/createSubjectForm'">과제생성</button>
-			</c:if>
-		</div>
+	
+	<table border="1">
+	<tr>
+	<td>&nbsp;&nbsp;수강신청 가능한 과목&nbsp;&nbsp;</td>
+	<td>&nbsp;&nbsp;수강 신청하기&nbsp;&nbsp;</td>
+	</tr>
+	<% 
+	for(int i = 0; i < allSubjectCount; i++) {
+		if(requestyn[i].equals("y")) {
+	%>
+	<form action="/subject/SubjectRequest" method="post">
+	<tr>
+	<td> <%=allSubjectName[i] %></td>
+	<td> 
+	<Input Type="hidden" name="subjectName" value="<%=allSubjectName[i] %>"> 
+	<Input Type="hidden" name="maxDay" value="<%=maxDay[i] %>"> 
+	<input type="submit" value="수강 신청"> 
+	</td>
+	</tr>
+	</form>
+	<%
+		}
+	}
+	%>
+	</table>
+	
+	
+	<br>
+	
+	
 	</div>
+	
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-package dbproject.subject;
+package dbproject.upload;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import dbproject.subject.SubjectDAO;
 
 
 
@@ -54,10 +56,10 @@ public class UploadFileServlet extends HttpServlet {
 
 			
 			HttpSession session=request.getSession();
-			SubjectDAO subjectDao=new SubjectDAO();
+			UploadDAO uploadDao=new UploadDAO();
 			System.out.println("getParameter:"+mr.getParameter("subjectNum"));
 			try {
-				subjectDao.addFile("/upload/"  ,mr.getFile("s_file").getName(), (String)session.getAttribute("userId"),Integer.parseInt(mr.getParameter("subjectNum"))); //형근: 파라메터로 전달한 파일이름과 세션에 저장되있는 사용자 Id와 프로젝트 이름 전달 
+				uploadDao.addFile("/upload/"  ,mr.getFile("s_file").getName(), (String)session.getAttribute("userId"),Integer.parseInt(mr.getParameter("subjectNum"))); //형근: 파라메터로 전달한 파일이름과 세션에 저장되있는 사용자 Id와 프로젝트 이름 전달 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				logger.debug("UploadFileSerlvet error:"+e.getMessage());

@@ -1,4 +1,4 @@
-package dbproject.subject;
+package dbproject.upload;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import dbproject.subject.SubjectDAO;
 import dbproject.support.SessionUtils;
 import dbproject.user.LoginServlet;
 
@@ -23,7 +24,7 @@ public class ReadSubjectServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-		SubjectDAO subjectDao = new SubjectDAO();
+		UploadDAO uploadDao = new UploadDAO();
 		Subject subject = new Subject();
 		
 		HttpSession session = req.getSession();
@@ -40,8 +41,8 @@ public class ReadSubjectServlet extends HttpServlet {
 		else req.setAttribute("isUser", true);
 		
 		try {
-			subjectDao.updateReadcont(num);
-			subject = subjectDao.viewSubject(num);
+			uploadDao.updateReadcont(num);
+			subject = uploadDao.viewSubject(num);
 			
 			
 			req.setAttribute("isView", true);

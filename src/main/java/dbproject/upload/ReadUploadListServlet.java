@@ -1,4 +1,4 @@
-package dbproject.subject;
+package dbproject.upload;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import dbproject.subject.SubjectDAO;
+
 @WebServlet("/files/uploadlist")
 public class ReadUploadListServlet extends HttpServlet{
 	public static Logger logger=LoggerFactory.getLogger(ReadUploadListServlet.class);
@@ -30,9 +32,9 @@ public class ReadUploadListServlet extends HttpServlet{
 			userId=(String)session.getAttribute("userId");
 		}
 		List uploadlist=new ArrayList();
-		SubjectDAO subjectDao=new SubjectDAO();
+		UploadDAO uploadDao=new UploadDAO();
 		try {
-			uploadlist=subjectDao.getUploadList(userId,Integer.parseInt(request.getParameter("subjectNum")));
+			uploadlist=uploadDao.getUploadList(userId,Integer.parseInt(request.getParameter("subjectNum")));
 			request.setAttribute("files", uploadlist);
 			RequestDispatcher rd=request.getRequestDispatcher("/upload_list.jsp");
 			rd.forward(request, response);
