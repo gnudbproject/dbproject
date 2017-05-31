@@ -102,7 +102,7 @@
 				</td>
 			</tr>
 	</table>
-	
+	</form>
 	
 	
 	<% //추가sh
@@ -140,6 +140,5 @@
 	}			
 	%>  
 	</div>
-	</form>
 </body>
 </html>
