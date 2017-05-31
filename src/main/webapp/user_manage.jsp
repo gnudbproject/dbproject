@@ -13,10 +13,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>board</title>
 <link href="/stylesheets/board.css?v=1" rel="stylesheet" type="text/css">
-<%@ include file="./commons/top.jspf"%>
 </head>
 <body>
+	<%@ include file="./commons/top.jspf"%>
+	<div id="cover_container">
 		<%@ include file="./commons/left_sidemenu.jspf"%>
+
+
+		<div class="wrap ac">
+			<div id="container_wrap">
 	<div id="container">
 		<div id="top">
 			<div id="top_header">유저목록</div>
@@ -70,5 +75,10 @@
 		
 		</div>
 	</div>
+	
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>

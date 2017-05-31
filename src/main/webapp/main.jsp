@@ -8,7 +8,7 @@
 <title>Main.jsp</title>
 </head>
 <body>
-  
+
 	<%@ include file="./commons/top.jspf"%>
 	<div id="cover_container">
 		<%@ include file="./commons/left_sidemenu.jspf"%>

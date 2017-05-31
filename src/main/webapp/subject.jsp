@@ -32,11 +32,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@ include file="./commons/top.jspf"%>
+
 <title>Main.jsp</title>
 </head>
 <body>
-	<%@ include file="./commons/left_sidemenu.jspf"%>
+	<%@ include file="./commons/top.jspf"%>
+	<div id="cover_container">
+		<%@ include file="./commons/left_sidemenu.jspf"%>
+
+
+		<div class="wrap ac">
+			<div id="container_wrap">
+
 	<div id=main_content>
 
 	
