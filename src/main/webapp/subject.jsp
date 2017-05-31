@@ -46,7 +46,7 @@
 
 	<div id=main_content>
 
-	style ="display: inline-block;"
+
 	<table style ="display: inline-block;" border="1">
 	<tr>
 	<td>&nbsp;&nbsp;수강신청 가능한 과목&nbsp;&nbsp;</td>
