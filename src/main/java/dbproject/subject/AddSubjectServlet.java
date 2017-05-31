@@ -20,7 +20,7 @@ public class AddSubjectServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		SubjectDAO subjectDAO = new SubjectDAO();
 		
 //		String userId = request.getParameter(SESSION_USER_ID);

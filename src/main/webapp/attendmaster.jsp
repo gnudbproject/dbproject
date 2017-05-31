@@ -165,6 +165,7 @@
 	<Input Type="hidden" name="maxDay" value="<%=maxDay[i] %>">
 	<input type="submit" value="취소"> 
 	</td>
+	</form>
 	</tr>
 	
 	<%
@@ -177,40 +178,7 @@
 	
 	
 	
-	
-	<form name="frm">
-	학생 출석 조회하기 : 
-	<SELECT name="subjectNameList" onChange="change();">
-	<OPTION value="-1" name="none">과목을 선택하세요.</OPTION>
-	<%
-		for(int i = 0; i < allSubjectCount; i++) { 
-		%>
-			<OPTION value="<%=i %>"><%=allSubjectName[i] %></OPTION>
-			<% 
-		}
-	%>
-	<%-- 
-	<OPTION value="1" name="일">일</OPTION>
-	<OPTION value="2" name="이">이</OPTION>
-	<OPTION value="3" name="삼">삼</OPTION>
-	
-	--%>
-	</SELECT>
-
-	<INPUT type="text" name="combo_nm">
-	<input type="button" value="조회" onclick="choice()">
-	</form>
-	
-	
-	
-	
-	
-	<br><br>
-	
-	<form name = "frm2">
-	<textarea name = "txt" rows="40" cols="40"></textarea>
-	</form>
-	
+		
 	</div>
 	
 
