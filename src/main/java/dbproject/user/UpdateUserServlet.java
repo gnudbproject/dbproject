@@ -72,7 +72,7 @@ public class UpdateUserServlet extends HttpServlet {
 			userDao.updateUser(user);
 			logger.debug("개인정보 수정 : " + password);
 		} catch (SQLException e) {
-			logger.debug("SQL Exception error" + e);
+			logger.debug("SQL Exception error:" + e);
 		}
 
 		resp.sendRedirect("/board/Boardlist");

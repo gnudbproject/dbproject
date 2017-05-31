@@ -30,6 +30,18 @@
 		}
 		return false;
 	}
+	
+	function passwordVaild(){
+		var check1=document.getElementById("password");
+		var check2=document.getElementById("password2");
+		if(check1.value!=check2.value){
+			alert("비밀번호를 다시 확인해주세요.")
+		}
+		else{
+			document.getElementById("form-sign").submit();
+		}
+	}
+	
 </script>
 
 
@@ -116,8 +128,8 @@
 					<c:choose>
 						<c:when test="${isUpdate}">
 							<input type="hidden" name="userId" value="${user.userId}" />
-				${user.userId}
-			</c:when>
+							${user.userId}
+						</c:when>
 
 						<c:otherwise>
 							<input type="text" name="userId" value="${user.userId}" />
@@ -128,13 +140,13 @@
 				</div>
 
 				<div>
-					<label class="" for="password">Password</label> <input
-						type="password" name="password" value="${user.password}" />
+					<label class="" for="password">Password</label> 
+					<input type="password" id="password" name="password" value="${user.password}" />
 				</div>
 
 				<div>
-					<label class="" for="password2">Password-check</label> <input
-						type="password" name="password2" value="${user.password}" />
+					<label class="" for="password2">Password-check</label> 
+					<input type="password" id="password2" name="password2" value="${user.password}" />
 				</div>
 
 				<div>
@@ -145,11 +157,11 @@
 				<input type="hidden" name="power" value="${user.power }"/> <!-- 권한 추가 -->
 
 				<div class="signup-footer">
-					<button type="submit" class="sign_up_button">
+					<button type="button" class="sign_up_button" onclick="passwordVaild();">
 
-						<c:set var="buttonName" value="가입하기" />
+						<c:set var="buttonName" value="가입하기"  />
 						<c:if test="${isUpdate}">
-							<c:set var="buttonName" value="수정하기" />
+							<c:set var="buttonName" value="수정하기"/>
 						</c:if>
 
 						${ buttonName }

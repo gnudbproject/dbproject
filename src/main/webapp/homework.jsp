@@ -65,7 +65,7 @@
 					<input type="submit" value="조회">
 				</form>
 		
-			<div id="top_header">과제목록</div>
+			<div id="top_header"><h3>과제목록</h3></div>
 		</div>
 		
 		<%
@@ -115,7 +115,7 @@
 			}else{	
 			%>
 					<tr height="100">
-						<td colspan="5" align="center">NO DATA.</td>
+						<td colspan="5" align="center">등록된 과제가 없습니다.</td>
 					</tr>
 					<%
 			}
@@ -145,10 +145,14 @@
 
 		<div id="homework-footer">
 			<c:if test="${isMaster }">
-				<button id="homework-button" onclick="location.href='/homeworks/createHomeworkForm?subjectName=${subjectName}'">과제생성</button>
+				<button id="homework-button" onclick="location.href='/homeworks/createHomeworkForm'">과제생성</button>
 			</c:if>
 		</div>
-		<%} %>
+		<%}else{
+			
+			out.print("<br><br>과목을 선택하고 조회 버튼을 누르세요");
+		}
+		%>
 	</div>
 	
 </body>

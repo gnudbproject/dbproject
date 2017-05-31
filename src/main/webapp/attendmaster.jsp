@@ -165,6 +165,7 @@
 	<Input Type="hidden" name="maxDay" value="<%=maxDay[i] %>">
 	<input type="submit" value="취소"> 
 	</td>
+	</form>
 	</tr>
 	
 	<%

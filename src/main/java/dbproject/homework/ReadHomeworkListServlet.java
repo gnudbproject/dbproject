@@ -11,11 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dbproject.subject.SubjectDAO;
+import dbproject.support.SessionUtils;
 
 @WebServlet("/homeworks/homeworkList")
 public class ReadHomeworkListServlet extends HttpServlet{
@@ -25,7 +27,8 @@ public class ReadHomeworkListServlet extends HttpServlet{
 		UploadDAO uploadDao=new UploadDAO();
 		//과목정보를 유지하기 위한 코드
 		SubjectDAO subjectDAO = new SubjectDAO();
-
+		HttpSession session=request.getSession();
+		
 		int subjectCount;
 		int allSubjectCount;
 		String[] subjectName;
@@ -49,8 +52,15 @@ public class ReadHomeworkListServlet extends HttpServlet{
 		
 	  	int page = 1;	// 기본 페이지
 		int limit = 10; // 최대 페이지
-		String subject=request.getParameter("subjectNameList"); //조회할 과목명
-		request.setAttribute("subjectName",subject); //조회할 과목명
+		String subject;
+		
+		if(request.getParameter("subjectNameList")!=null){
+			subject=request.getParameter("subjectNameList"); //조회할 과목명
+			session.setAttribute("subjectName", subject);
+		}
+		else{
+			subject=(String)session.getAttribute("subjectName");   //조회할 과목명
+		}
 		
 		// 사용자의 요청(req)을 통해 "page" 파라미터가 있는 확인
 		if(request.getParameter("page") != null){
