@@ -16,8 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dbproject.subject.SubjectDAO;
-import dbproject.support.SessionUtils;
+import dbproject.attend.AttendDAO;
 
 @WebServlet("/homeworks/homeworkList")
 public class ReadHomeworkListServlet extends HttpServlet{
@@ -26,21 +25,20 @@ public class ReadHomeworkListServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UploadDAO uploadDao=new UploadDAO();
 		//과목정보를 유지하기 위한 코드
-		SubjectDAO subjectDAO = new SubjectDAO();
+		AttendDAO attendDAO = new AttendDAO();
 		HttpSession session=request.getSession();
 		
 		int subjectCount;
-		int allSubjectCount;
-		String[] subjectName;
-		String[] allSubjectName;
+		String[] subjectNames;
+		String userId=(String)session.getAttribute("userId");
 		try {
 
-			allSubjectCount = subjectDAO.getAllSubjectCount();
-			allSubjectName = new String[allSubjectCount];
-			allSubjectName = subjectDAO.getAllSubjectName(allSubjectCount);
+			subjectCount = attendDAO.getSubjectCount(userId);
+			subjectNames = new String[subjectCount];
+			subjectNames = attendDAO.getSubjectName(subjectCount, userId);
 
-			request.setAttribute("allSubjectCount", allSubjectCount);
-			request.setAttribute("allSubjectName", allSubjectName);
+			request.setAttribute("subjectCount", subjectCount);
+			request.setAttribute("subjectNames", subjectNames);
 		}catch(SQLException e){
 			logger.debug("과목정보 조회 error:"+e.getMessage());
 		}
