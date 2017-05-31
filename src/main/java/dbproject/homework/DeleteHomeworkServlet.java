@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebServlet("/subjects/removeSubject")
-public class DeleteSubjectServlet extends HttpServlet {
-	public static Logger logger=LoggerFactory.getLogger(DeleteSubjectServlet.class);
+@WebServlet("/homeworks/removeHomework")
+public class DeleteHomeworkServlet extends HttpServlet {
+	public static Logger logger=LoggerFactory.getLogger(DeleteHomeworkServlet.class);
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UploadDAO uploadDao=new UploadDAO();
 		try {
-			uploadDao.removeSubject(Integer.parseInt(request.getParameter("subjectNum")));
+			uploadDao.removeHomework(Integer.parseInt(request.getParameter("homeworkNum")));
 		} catch (Exception e) {
-			logger.debug("DeleteSubjectServlet error:"+e.getMessage());
+			logger.debug("DeleteHomeworkServlet error:"+e.getMessage());
 		}
-		response.sendRedirect("/subjects/subjectList");
+		response.sendRedirect("/homeworks/homeworkList");
 	}
 }

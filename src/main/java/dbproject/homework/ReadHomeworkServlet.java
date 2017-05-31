@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.io.IOException;
 
@@ -13,28 +13,27 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dbproject.subject.SubjectDAO;
 import dbproject.support.SessionUtils;
 import dbproject.user.LoginServlet;
 
-@WebServlet("/subjects/viewSubject")
-public class ReadSubjectServlet extends HttpServlet {
-	private static final Logger logger = LoggerFactory.getLogger(ReadSubjectServlet.class);
+@WebServlet("/homeworks/viewHomework")
+public class ReadHomeworkServlet extends HttpServlet {
+	private static final Logger logger = LoggerFactory.getLogger(ReadHomeworkServlet.class);
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		UploadDAO uploadDao = new UploadDAO();
-		Subject subject = new Subject();
+		Homework homework = new Homework();
 		
 		HttpSession session = req.getSession();
 		
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
 		int num = Integer.parseInt( req.getParameter("num") );
-		String subject_userId = req.getParameter("subject_userId");
+		String homework_userId = req.getParameter("homework_userId");
 		
-		if(!userId.equals(subject_userId)) {
+		if(!userId.equals(homework_userId)) {
 			req.setAttribute("isNotUser", true);
 		}
 		
@@ -42,17 +41,17 @@ public class ReadSubjectServlet extends HttpServlet {
 		
 		try {
 			uploadDao.updateReadcont(num);
-			subject = uploadDao.viewSubject(num);
+			homework = uploadDao.viewHomework(num);
 			
 			
 			req.setAttribute("isView", true);
-			req.setAttribute("subject", subject);
+			req.setAttribute("homework", homework);
 			
-			RequestDispatcher rd = req.getRequestDispatcher("/subject_form.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("/homework_form.jsp");
 			rd.forward(req, resp);
 			
 		} catch (Exception e) {
-			logger.debug("SubjectviewServlet error : " + e.getMessage());
+			logger.debug("HomeworkviewServlet error : " + e.getMessage());
 		} 
 	}
 }

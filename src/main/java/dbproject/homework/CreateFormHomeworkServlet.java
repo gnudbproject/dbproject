@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,24 +16,27 @@ import dbproject.user.LoginServlet;
 import dbproject.user.User;
 import dbproject.user.UserDAO;
 
-@WebServlet("/subjects/createSubjectForm")
-public class CreateFormSubjectServlet extends HttpServlet {
+@WebServlet("/homeworks/createHomeworkForm")
+public class CreateFormHomeworkServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = req.getSession();
+		HttpSession session = request.getSession();
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
 	
 		UserDAO userDao = new UserDAO();
 		
 		try {
-			req.setAttribute("isCreate", true);
+			request.setAttribute("isCreate", true);
 			User user = userDao.findByUserId(userId);
-			req.setAttribute("user", user);
-			RequestDispatcher rd = req.getRequestDispatcher("/subject_form.jsp");
-			rd.forward(req, resp);
+			request.setAttribute("user", user);
+			Homework homework =new Homework(request.getParameter("subjectName"));
+			request.setAttribute("homework", homework);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/homework_form.jsp");
+			rd.forward(request, response);
 		} catch (SQLException e) {
 		}
 

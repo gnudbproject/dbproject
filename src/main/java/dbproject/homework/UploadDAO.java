@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class UploadDAO {
 		
 		public int getListCount() throws SQLException {
 
-			String sql = "select count(*) from subject";
+			String sql = "select count(*) from homeworks";
 			
 			int count = 0;
 			
@@ -100,39 +100,37 @@ public class UploadDAO {
 			return count;
 		}
 		
-		public List getSubjectList (int page, int limit) throws SQLException{
+		public List getHomeworkList (int page, int limit,String subjectname) throws SQLException{
 			
 			List list = new ArrayList(); // 목록 리턴을 위한 변수
 			
 			// 목록를 조회하기 위한 쿼리
-			String sql = "select * from subject order by re_ref desc, re_seq asc limit ?, ?"; 
+			String sql = "select * from homeworks where subjectname=? order by homeworkNum limit ?,?"; 
 			
 			// 조회범위
-			int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
-			int endrow = limit;  			 // ex ) limit 만큼 리스트에 나열
+						int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
+						int endrow = limit;  			 // ex ) limit 만큼 리스트에 나열
 			
 			try{
 				conn = getConnection();
 				// 실행을 위한 쿼리 및 파라미터 저장
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, startrow);
-				pstmt.setInt(2, endrow);
+				pstmt.setString(1, subjectname);
+				pstmt.setInt(2, startrow);
+				pstmt.setInt(3, endrow);
 				
 				rs = pstmt.executeQuery(); // 쿼리 실행 
 				
 				while(rs.next()){
-					Subject subject = new Subject();
-					subject.setSubjectNum(rs.getInt("subjectNum"));
-					subject.setUserId(rs.getString("userId"));
-					subject.setSubjectName(rs.getString("subjectName"));
-					subject.setSubjectContent(rs.getString("subjectContent"));
-					subject.setSubjectReadCnt(rs.getInt("subjectReadcnt"));
-					subject.setSubjectDate(rs.getDate("subjectDate"));
-					subject.setRe_ref(rs.getInt("re_ref"));
-					subject.setRe_lev(rs.getInt("re_lev"));
-					subject.setRe_seq(rs.getInt("re_seq"));
+					Homework homework = new Homework();
+					homework.setHomeworkNum(rs.getInt("homeworkNum"));
+					homework.setUserId(rs.getString("userId"));
+					homework.setHomeworkName(rs.getString("homeworkName"));
+					homework.setHomeworkContent(rs.getString("homeworkContent"));
+					homework.setHomeworkReadCnt(rs.getInt("homeworkReadcnt"));
+					homework.setHomeworkDate(rs.getDate("homeworkDate"));
 					
-					list.add(subject); // 행을 하나씩 리스트에 추가
+					list.add(homework); // 행을 하나씩 리스트에 추가
 				}
 				return list;
 				
@@ -147,8 +145,8 @@ public class UploadDAO {
 			return null;
 		}
 		
-		public Subject findBySubjectInfo(int num) throws SQLException {
-			String sql = "select * from subject where subjectNum = ?";
+		public Homework findByHomeworkInfo(int num) throws SQLException {
+			String sql = "select * from homeworks where homeworkNum = ?";
 			try {
 				conn = getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -160,26 +158,24 @@ public class UploadDAO {
 					return null;
 				}
 
-				return new Subject(rs.getString("subjectName"), rs.getString("subjectContent"), rs.getString("userId"));
+				return new Homework(rs.getString("homeworkName"), rs.getString("homeworkContent"), rs.getString("userId"));
 
 			} finally {
 				SourceReturn();
 			}
 		}
 		
-		public void addSubject(Subject subject) throws SQLException {
-			String sql = "insert into subject(subjectName,subjectContent,userId,subjectReadcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
+		public void addHomework(Homework homework) throws SQLException {
+			String sql = "insert into homeworks(homeworkName,homeworkContent,userId,homeworkReadcnt,subjectName) values(?,?,?,?,?)";
 			try {
 				conn = getConnection();
 				pstmt = conn.prepareStatement(sql);
 				
-				pstmt.setString(1, subject.getSubjectName());
-				pstmt.setString(2, subject.getSubjectContent());
-				pstmt.setString(3, subject.getUserId());
-				pstmt.setInt(4, subject.getSubjectReadCnt());
-				pstmt.setInt(5, subject.getRe_ref());
-				pstmt.setInt(6, subject.getRe_lev());
-				pstmt.setInt(7, subject.getRe_seq());
+				pstmt.setString(1, homework.getHomeworkName());
+				pstmt.setString(2, homework.getHomeworkContent());
+				pstmt.setString(3, homework.getUserId());
+				pstmt.setInt(4, homework.getHomeworkReadCnt());
+				pstmt.setString(5, homework.getSubjectName());
 				
 				pstmt.executeUpdate();
 
@@ -188,8 +184,8 @@ public class UploadDAO {
 			}
 		}
 		
-		public void removeSubject(int num) throws SQLException {
-			String sql = "delete from subject where subjectNum = ?";
+		public void removeHomework(int num) throws SQLException {
+			String sql = "delete from homeworks where homeworkNum = ?";
 					
 			try {
 				conn = getConnection();
@@ -204,9 +200,9 @@ public class UploadDAO {
 			}
 		}
 		
-		public Subject viewSubject(int num) throws SQLException{
-			String sql = "select * from subject where subjectNum = ?";
-			Subject subject = new Subject();
+		public Homework viewHomework(int num) throws SQLException{
+			String sql = "select * from homeworks where homeworkNum = ?";
+			Homework homework = new Homework();
 			try {
 				conn = getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -214,26 +210,24 @@ public class UploadDAO {
 				
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					subject.setSubjectNum( rs.getInt("subjectNum") );
-					subject.setSubjectName( rs.getString("subjectName") );
-					subject.setSubjectContent( rs.getString("subjectContent") );
-					subject.setUserId( rs.getString("userId") );
-					subject.setSubjectReadCnt( rs.getInt("subjectReadcnt") );
-					subject.setSubjectDate( rs.getDate("subjectDate") );
-					subject.setRe_lev( rs.getInt("re_ref") );
-					subject.setRe_ref( rs.getInt("re_ref") );
-					subject.setRe_seq( rs.getInt("re_seq") );
+					homework.setHomeworkNum( rs.getInt("homeworkNum") );
+					homework.setHomeworkName( rs.getString("homeworkName") );
+					homework.setHomeworkContent( rs.getString("homeworkContent") );
+					homework.setUserId( rs.getString("userId") );
+					homework.setHomeworkReadCnt( rs.getInt("homeworkReadcnt") );
+					homework.setHomeworkDate( rs.getDate("homeworkDate") );
+	
 				}
 			} catch (Exception e) {
-				logger.debug("viewSubject error:"+e.getMessage());
+				logger.debug("viewHomework error:"+e.getMessage());
 			} finally {
 				SourceReturn();
 			}
-			return subject;
+			return homework;
 		}
 		
 		public void updateReadcont(int num) throws SQLException{
-			String sql = "update subject set subjectReadcnt = subjectReadcnt + 1 where subjectNum = ?";
+			String sql = "update homeworks set homeworkReadcnt = homeworkReadcnt + 1 where homeworkNum = ?";
 			conn = getConnection();
 			
 			try {
@@ -249,39 +243,39 @@ public class UploadDAO {
 			}
 		}
 		
-		public void updateSubject(Subject subject) throws SQLException {
-			String sql = "update subject set subjectName = ?, subjectContent = ? ,subjectDate=? where subjectNum = ?";
+		public void updateHomework(Homework homework) throws SQLException {
+			String sql = "update homeworks set homeworkName = ?, homeworkContent = ? ,homeworkDate=? where homeworkNum = ?";
 					
 			conn = getConnection();
 			
 			Timestamp date=new Timestamp(new Date().getTime());
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, subject.getSubjectName());
-				pstmt.setString(2, subject.getSubjectContent());
+				pstmt.setString(1, homework.getHomeworkName());
+				pstmt.setString(2, homework.getHomeworkContent());
 				pstmt.setTimestamp(3, date);
-				pstmt.setInt(4, subject.getSubjectNum());
+				pstmt.setInt(4, homework.getHomeworkNum());
 				
 				pstmt.execute();
-				logger.debug("UpdateSubject : " + subject);
+				logger.debug("UpdateHomework : " + homework);
 			} catch (Exception e) {
-				logger.debug("UpdateSubject error : " + e);
-				logger.debug(subject + "");
+				logger.debug("UpdateHomework error : " + e);
+				logger.debug(homework + "");
 			} finally {
 				SourceReturn();
 			}
 		}
 		
 		
-		public void addFile(String File_Path,String File_Name,String Author,int subjectNum) throws SQLException{
-			String sql="insert into Files(File_Path,File_Name,Author,subjectNum) values(?,?,?,?)";
+		public void addFile(String File_Path,String File_Name,String Author,int homeworkNum) throws SQLException{
+			String sql="insert into Files(File_Path,File_Name,Author,homeworkNum) values(?,?,?,?)";
 			try{
 			conn=getConnection();
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, File_Path);
 			pstmt.setString(2, File_Name);
 			pstmt.setString(3, Author);
-			pstmt.setInt(4, subjectNum);
+			pstmt.setInt(4, homeworkNum);
 			pstmt.executeUpdate();
 			}catch(SQLException e){
 				logger.debug("addFile error:"+e.getMessage());
@@ -291,27 +285,27 @@ public class UploadDAO {
 			}
 		}
 		
-		public List getUploadList (String userId,int subjectNum) throws SQLException{
+		public List getUploadList (String userId,int homeworkNum) throws SQLException{
 			String sql,sql2;	
 			List list = new ArrayList(); // 목록 리턴을 위한 변수
 			
 					try{
 						
 						conn=getConnection();
-						sql2="select subjectName from files join subject on ? = subject.subjectNum";
+						sql2="select homeworkName from files join homeworks on ? = homeworks.homeworkNum";
 						
 						if(userId.equals("master")){
-							sql="select * from files where subjectNum=?";
+							sql="select * from files where homeworkNum=?";
 							pstmt=conn.prepareStatement(sql);
-							pstmt.setInt(1,subjectNum );
+							pstmt.setInt(1,homeworkNum );
 							pstmt2=conn.prepareStatement(sql2);
 							
 						}
 						else{
-							sql="select * from files where Author=? AND subjectNum=?";
+							sql="select * from files where Author=? AND homeworkNum=?";
 							pstmt=conn.prepareStatement(sql);
 							pstmt.setString(1, userId);
-							pstmt.setInt(2, subjectNum);
+							pstmt.setInt(2, homeworkNum);
 							pstmt2=conn.prepareStatement(sql2);
 						}
 						rs=pstmt.executeQuery();
@@ -322,11 +316,11 @@ public class UploadDAO {
 							file.setFileName(rs.getString("File_Name"));
 							file.setUploadTime(rs.getDate("Upload_Time"));
 							file.setAuthor(rs.getString("Author"));
-							file.setSubjectNum(rs.getInt("subjectNum"));
-							pstmt2.setInt(1, rs.getInt("subjectNum"));  // subjectNum을 이용하여 subjectName을 찾는다.
+							file.setHomeworkNum(rs.getInt("homeworkNum"));
+							pstmt2.setInt(1, rs.getInt("homeworkNum"));  // homeworkNum을 이용하여 homeworkName을 찾는다.
 							rs2=pstmt2.executeQuery();
 							while(rs2.next()){
-								file.setSubjectName(rs2.getString("subjectName"));
+								file.setHomeworkName(rs2.getString("homeworkName"));
 							}
 							list.add(file);
 							}

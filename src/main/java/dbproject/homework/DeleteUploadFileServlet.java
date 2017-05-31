@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class DeleteUploadFileServlet extends HttpServlet {
 			logger.debug("DeleteFileServlet error:"+e.getMessage());
 		}
 		finally{
-			response.sendRedirect("/subjects/subjectList");
+			response.sendRedirect("/homeworks/homeworkList");
 		}
 	}
 }

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
-<%@ page import="dbproject.subject.*"%>
+<%@ page import="dbproject.homework.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
@@ -22,8 +22,8 @@
 			<div id="top_header">제출목록</div>
 		</div>
 
-		<div id="subject-container">
-			<div id="subject-header">
+		<div id="filelist-container">
+			<div id="filelist-header">
 				<table border="1px" cellpadding="0" cellspacing="0" align="center">
 					<tr height="30">
 						<!-- BOARD LIST -->
@@ -46,7 +46,7 @@
 									</td>
 									<td align="center">${list.author}</td>
 									<td align="center"><fmt:formatDate value="${list.uploadTime}" pattern="yyyy-MM-dd"/></td>
-									<td align="center">${list.subjectName}</td>
+									<td align="center">${list.homeworkName}</td>
 									<td align="center"><a href="/files/delete?fileName=${list.fileName}">제출취소</a></td>
 								</tr>
 							</c:forEach>
@@ -61,8 +61,8 @@
 			</div>
 		</div>
 
-		<div id="subject-footer">
-			<button id="subject-button" onclick="location.href='/subjects/subjectList'">과제목록</button>
+		<div id="filelist-footer">
+			<button id="filelist-button" onclick="location.href='/homeworks/homeworkList'">과제목록</button>
 		
 		</div>
 	</div>

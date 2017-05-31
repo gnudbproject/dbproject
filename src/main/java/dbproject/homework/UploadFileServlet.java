@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import dbproject.subject.SubjectDAO;
 
 
 
@@ -57,15 +56,15 @@ public class UploadFileServlet extends HttpServlet {
 			
 			HttpSession session=request.getSession();
 			UploadDAO uploadDao=new UploadDAO();
-			System.out.println("getParameter:"+mr.getParameter("subjectNum"));
+			System.out.println("getParameter:"+mr.getParameter("homeworkNum"));
 			try {
-				uploadDao.addFile("/upload/"  ,mr.getFile("s_file").getName(), (String)session.getAttribute("userId"),Integer.parseInt(mr.getParameter("subjectNum"))); //형근: 파라메터로 전달한 파일이름과 세션에 저장되있는 사용자 Id와 프로젝트 이름 전달 
+				uploadDao.addFile("/upload/"  ,mr.getFile("s_file").getName(), (String)session.getAttribute("userId"),Integer.parseInt(mr.getParameter("homeworkNum"))); //형근: 파라메터로 전달한 파일이름과 세션에 저장되있는 사용자 Id와 프로젝트 이름 전달 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				logger.debug("UploadFileSerlvet error:"+e.getMessage());
 			}
 			
-			response.sendRedirect("subjects/subjectList");
+			response.sendRedirect("homeworks/homeworkList");
 			
 			// 형근: 아래 주석 업로드한 파일명이 겹칠경우 원래 파일명과 함께 맞는지 확인하기 위한 코드
 //			File s_file = mr.getFile("s_file"); // 업로드 후에 파일객체 반환!

@@ -22,8 +22,8 @@
 			<div id="top_header">유저목록</div>
 		</div>
 
-		<div id="subject-container">
-			<div id="subject-header">
+		<div id="userlist-container">
+			<div id="userlist-header">
 				<table border="1px" cellpadding="0" cellspacing="0" align="center">
 					<tr height="30">
 						<td align="center" width="100">구분</td>
@@ -65,8 +65,8 @@
 			</div>
 		</div>
 
-		<div id="subject-footer">
-			<button id="subject-button" onclick="location.href='/users/createForm'">교사 계정 생성</button>
+		<div id="userlist-footer">
+			<button id="userlist-button" onclick="location.href='/users/createForm'">교사 계정 생성</button>
 		
 		</div>
 	</div>

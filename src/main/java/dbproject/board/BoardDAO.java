@@ -90,11 +90,11 @@ public class BoardDAO {
 		List list = new ArrayList(); // 목록 리턴을 위한 변수
 		
 		// 목록를 조회하기 위한 쿼리
-		String sql = "select * from boards order by re_ref desc, re_seq asc limit ?, ?"; 
+		String sql = "select * from boards order by num desc limit ?,?"; 
 		
 		// 조회범위
-		int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
-		int endrow = limit;  			 // ex ) limit 만큼 리스트에 나열
+				int startrow = (page-1) * 10; // ex )  0, 10, 20, 30 ...
+				int endrow = limit;  			 // ex ) limit 만큼 리스트에 나열
 		
 		try{
 			conn = getConnection();
@@ -113,9 +113,6 @@ public class BoardDAO {
 				board.setContent(rs.getString("Content"));
 				board.setReadcnt(rs.getInt("Readcnt"));
 				board.setDate(rs.getDate("Date"));
-				board.setRe_ref(rs.getInt("re_ref"));
-				board.setRe_lev(rs.getInt("re_lev"));
-				board.setRe_seq(rs.getInt("re_seq"));
 				
 				list.add(board); // 행을 하나씩 리스트에 추가
 			}
@@ -153,7 +150,7 @@ public class BoardDAO {
 	}
 	
 	public void addBoard(Board board) throws SQLException {
-		String sql = "insert into boards(Subject,Content,userId,Readcnt,re_ref,re_lev,re_seq) values(?,?,?,?,?,?,?)";
+		String sql = "insert into boards(Subject,Content,userId,Readcnt) values(?,?,?,?)";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -162,9 +159,6 @@ public class BoardDAO {
 			pstmt.setString(2, board.getContent());
 			pstmt.setString(3, board.getUserId());
 			pstmt.setInt(4, board.getReadcnt());
-			pstmt.setInt(5, board.getRe_ref());
-			pstmt.setInt(6, board.getRe_lev());
-			pstmt.setInt(7, board.getRe_seq());
 
 			pstmt.executeUpdate();
 
@@ -210,9 +204,7 @@ public class BoardDAO {
 				board.setUserId( rs.getString("UserId") );
 				board.setReadcnt( rs.getInt("Readcnt") );
 				board.setDate( rs.getDate("Date") );
-				board.setRe_lev( rs.getInt("re_ref") );
-				board.setRe_ref( rs.getInt("re_ref") );
-				board.setRe_seq( rs.getInt("re_seq") );
+				
 			}
 			logger.debug(board + "");
 		} catch (Exception e) {
@@ -240,7 +232,7 @@ public class BoardDAO {
 	}
 	
 	public void updateBoard(Board board) throws SQLException {
-		String sql = "update boards set SubJect = ?, Content = ? Date=? where Num = ?";
+		String sql = "update boards set SubJect = ?, Content = ? ,Date=? where Num = ?";
 				
 		conn = getConnection();
 		
@@ -249,8 +241,8 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getSubject());
 			pstmt.setString(2, board.getContent());
-			pstmt.setInt(3, board.getNum());
-			pstmt.setTimestamp(4, date);
+			pstmt.setTimestamp(3, date);
+			pstmt.setInt(4, board.getNum());
 			
 			pstmt.execute();
 			logger.debug("UpdateBoard : " + board);
@@ -271,7 +263,7 @@ public class BoardDAO {
 		List<reBoardDTO> list = new ArrayList<reBoardDTO>(); // 목록 리턴을 위한 변수
 		
 		// 목록를 조회하기 위한 쿼리
-		String sql = "select * from reBoard where boardNum = ?";
+		String sql = "select * from reBoard where boardNum = ? order by Num desc";
 			
 		try{
 			conn = getConnection();

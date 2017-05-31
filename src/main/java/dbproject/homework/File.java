@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.sql.Date;
 
@@ -8,15 +8,15 @@ public class File {
 	private String fileName;
 	private Date uploadTime;
 	private String author;
-	private int subjectNum;
-	private String subjectName;
+	private int homeworkNum;
+	private String homeworkName;
 	
 	
-	public String getSubjectName() {
-		return subjectName;
+	public String getHomeworkName() {
+		return homeworkName;
 	}
-	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
+	public void setHomeworkName(String homeworkName) {
+		this.homeworkName = homeworkName;
 	}
 	public String getFileName() {
 		return fileName;
@@ -48,11 +48,11 @@ public class File {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public int getSubjectNum() {
-		return subjectNum;
+	public int getHomeworkNum() {
+		return homeworkNum;
 	}
-	public void setSubjectNum(int subjectNum) {
-		this.subjectNum = subjectNum;
+	public void setHomeworkNum(int homeworkNum) {
+		this.homeworkNum = homeworkNum;
 	}
 	@Override
 	public int hashCode() {
@@ -61,7 +61,7 @@ public class File {
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + fileNum;
 		result = prime * result + ((filePath == null) ? 0 : filePath.hashCode());
-		result = prime * result + subjectNum;
+		result = prime * result + homeworkNum;
 		result = prime * result + ((uploadTime == null) ? 0 : uploadTime.hashCode());
 		return result;
 	}
@@ -86,7 +86,7 @@ public class File {
 				return false;
 		} else if (!filePath.equals(other.filePath))
 			return false;
-		if (subjectNum != other.subjectNum)
+		if (homeworkNum != other.homeworkNum)
 			return false;
 		if (uploadTime == null) {
 			if (other.uploadTime != null)
@@ -98,7 +98,7 @@ public class File {
 	@Override
 	public String toString() {
 		return "File [fileNum=" + fileNum + ", filePath=" + filePath + ", fileName=" + fileName + ", uploadTime="
-				+ uploadTime + ", author=" + author + ", subjectNum=" + subjectNum + ", subjectName=" + subjectName
+				+ uploadTime + ", author=" + author + ", homeworkNum=" + homeworkNum + ", homeworkName=" + homeworkName
 				+ "]";
 	}
 	

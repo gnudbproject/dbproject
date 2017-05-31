@@ -5,9 +5,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="dbproject.board.*"%>
-<%@ page import="dbproject.user.LoginServlet" %>
-<%@ page import= "dbproject.support.SessionUtils" %>
-<%@ page import= "javax.servlet.http.HttpSession" %>
 
 
 <%  // 추가항목sh
@@ -31,7 +28,7 @@
 			<c:set var = "actionUrl" value = "/board/updateBoard" />
 			</c:if>
 			
-		<form id="board-field" action="${actionUrl}" method="post">
+	<form id="board-field" action="${actionUrl}" method="post">
 		
 		<table width="400" border="1" cellspacing="0" cellpadding="0" align="center">
 			<tr>
@@ -70,18 +67,19 @@
 				<td width="70" align="center">CONTENT</td>
 				<td width="330">
 				<c:choose>
-				<c:when test = "${isUser==true||isMaster==true}" >
-				<textarea name="content"  rows = "13" cols="40">${board.content}</textarea></td>
+				
+				<c:when test = "${isCreate==true||isUser==true||isMaster==true}" >
+					<textarea name="content"  rows = "13" cols="40">${board.content}</textarea></td>
 				</c:when>
 				
 				<c:otherwise>
-				<textarea readonly name="content" rows="16" cols="50" style = "resize:none;">${board.content}</textarea>
+					<textarea readonly name="content" rows="16" cols="50" style = "resize:none;">${board.content}</textarea>
 				</c:otherwise>
+				
 				</c:choose>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-			</form>
 			<c:choose>
 			
 			<c:when test="${isView}">
@@ -142,7 +140,6 @@
 	}			
 	%>  
 	</div>
-	
-</form>
+	</form>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package dbproject.upload;
+package dbproject.homework;
 
 import java.io.IOException;
 
@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dbproject.subject.SubjectDAO;
 
-@WebServlet("/subjects/updateSubject")
-public class UpdateSubjectServlet extends HttpServlet {
-	private static final Logger logger = LoggerFactory.getLogger(UpdateSubjectServlet.class);
+@WebServlet("/homeworks/updateHomework")
+public class UpdateHomeworkServlet extends HttpServlet {
+	private static final Logger logger = LoggerFactory.getLogger(UpdateHomeworkServlet.class);
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
@@ -24,22 +23,22 @@ public class UpdateSubjectServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		int num = Integer.parseInt( req.getParameter("num") );
-		String subjectName = req.getParameter("subject");
+		String homeworkName = req.getParameter("homework");
 		String content = req.getParameter("content");
 		
-		Subject subject = new Subject();
-		subject.setSubjectNum(num);
-		subject.setSubjectName(subjectName);
-		subject.setSubjectContent(content);
+		Homework homework = new Homework();
+		homework.setHomeworkNum(num);
+		homework.setHomeworkName(homeworkName);
+		homework.setHomeworkContent(content);
 		
 		UploadDAO uploadDao = new UploadDAO();
 		
 		try {
-			logger.debug("테스트 : " + subject);
-			uploadDao.updateSubject(subject);
-			resp.sendRedirect("/subjects/subjectList");
+			logger.debug("테스트 : " + homework);
+			uploadDao.updateHomework(homework);
+			resp.sendRedirect("/homeworks/homeworkList");
 		} catch (Exception e) {
-			logger.debug("updateSubject Servlet error" + e);
+			logger.debug("updateHomework Servlet error" + e);
 		}
 		
 	}

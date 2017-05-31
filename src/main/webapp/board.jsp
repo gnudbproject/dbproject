@@ -48,14 +48,9 @@
 		%>
 
 					<tr height="50">
-						<td align="center"><%=i+1 %></td>
+						<td align="center"><%=(10*(nowpage-1))+(i+1) %></td>
 						<td>
-							<%if(board.getRe_lev()!=0){ %> 
-							<%for(int a=0;a<=board.getRe_lev()*2;a++){ %>
-							&nbsp; <%} %> 
-						
-							<%}else{ %>
-							<%} %> 
+							 
 						<a href="/board/viewBoard?num=<%=board.getNum()%>&index=<%=i+1 %>&board_userId=<%=board.getUserId()%>"> 
 						<%=board.getSubject()%>
 						</a>
