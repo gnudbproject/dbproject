@@ -9,11 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dbproject.subject.SubjectDAO;
+import dbproject.attend.AttendDAO;
 
 @WebServlet("/subjects/subjectList")
 public class ReadSubjectListServlet extends HttpServlet {
@@ -22,20 +23,21 @@ public class ReadSubjectListServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SubjectDAO subjectDAO = new SubjectDAO();
-
+		HttpSession session =request.getSession();
+		AttendDAO attendDAO = new AttendDAO();
+		
 		int subjectCount;
-		int allSubjectCount;
-		String[] subjectName;
+		String[] subjectNames;
 		String[] allSubjectName;
+		String userId=(String)session.getAttribute("userId");
 		try {
 
-			allSubjectCount = subjectDAO.getAllSubjectCount();
-			allSubjectName = new String[allSubjectCount];
-			allSubjectName = subjectDAO.getAllSubjectName(allSubjectCount);
+			subjectCount = attendDAO.getSubjectCount(userId);
+			subjectNames = new String[subjectCount];
+			subjectNames = attendDAO.getSubjectName(subjectCount, userId);
 
-			request.setAttribute("allSubjectCount", allSubjectCount);
-			request.setAttribute("allSubjectName", allSubjectName);
+			request.setAttribute("subjectCount", subjectCount);
+			request.setAttribute("subjectNames", subjectNames);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/homework.jsp");
 			rd.forward(request, response);

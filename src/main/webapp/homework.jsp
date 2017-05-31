@@ -6,9 +6,9 @@
 
 <% 
 		//과목 정보 조회를 위한 초기화
-		int allSubjectCount=((Integer)request.getAttribute("allSubjectCount")).intValue();
-		String[] allSubjectName = new String[allSubjectCount];
-		allSubjectName = (String[])request.getAttribute("allSubjectName");
+		int subjectCount=((Integer)request.getAttribute("subjectCount")).intValue();
+		String[] subjectNames = new String[subjectCount];
+		subjectNames = (String[])request.getAttribute("subjectNames");
 	
 %>
 
@@ -54,9 +54,9 @@
 					<SELECT name="subjectNameList" onChange="change();">
 					<OPTION value="-1" name="none">조회할 과목을 선택하세요.</OPTION>
 					<%
-						for(int i = 0; i < allSubjectCount; i++) { 
+						for(int i = 0; i < subjectCount; i++) { 
 						%>
-							<OPTION value="<%=allSubjectName[i] %>"><%=allSubjectName[i] %></OPTION>
+							<OPTION value="<%=subjectNames[i] %>"><%=subjectNames[i] %></OPTION>
 							<% 
 						}
 					%>
