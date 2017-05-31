@@ -32,7 +32,7 @@ public class CreateFormHomeworkServlet extends HttpServlet {
 			request.setAttribute("isCreate", true);
 			User user = userDao.findByUserId(userId);
 			request.setAttribute("user", user);
-			Homework homework =new Homework(request.getParameter("subjectName"));
+			Homework homework =new Homework();
 			request.setAttribute("homework", homework);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/homework_form.jsp");

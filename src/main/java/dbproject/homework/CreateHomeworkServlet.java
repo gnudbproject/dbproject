@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +20,13 @@ public class CreateHomeworkServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UploadDAO uploadDao = new UploadDAO();
+		HttpSession session=request.getSession();
+		
 		request.setCharacterEncoding("UTF-8");
 		String homeworkName = request.getParameter("homeworkName");
 		String content = request.getParameter("content");
 		String userId = request.getParameter("userId");
-		String subjectName = request.getParameter("subjectName");
+		String subjectName = (String)session.getAttribute("subjectName");
 		
 		Homework homework = new Homework(homeworkName, content, userId,subjectName);
 	
@@ -35,7 +38,7 @@ public class CreateHomeworkServlet extends HttpServlet{
 		}
 
 		
-		response.sendRedirect("/homeworks/homeworkList?subjectNameList="+subjectName);
+		response.sendRedirect("/homeworks/homeworkList");
 	
 	}
 }

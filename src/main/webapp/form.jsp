@@ -29,6 +29,16 @@
 		}
 		return false;
 	}
+		function passwordVaild(){
+		var check1=document.getElementById("password");
+		var check2=document.getElementById("password2");
+		if(check1.value!=check2.value){
+			alert("비밀번호를 다시 확인해주세요.")
+		}
+		else{
+			document.getElementById("form-sign").submit();
+		}
+	}
 </script>
 
 
@@ -152,7 +162,7 @@
 				<input type="hidden" name="power" value="${user.power }"/> <!-- 권한 추가 -->
 
 				<div class="signup-footer">
-					<button type="submit" class="btn-custom">
+					<button type="submit" class="btn-custom" onclick="passwordVaild();">
 
 						<c:set var="buttonName" value="가입하기" />
 						<c:if test="${isUpdate}">

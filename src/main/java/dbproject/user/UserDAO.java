@@ -141,8 +141,8 @@ public class UserDAO {
 			pstmt.setString(3, user.getAge());
 			pstmt.setString(4, user.getEmail());
 			pstmt.setString(5, user.getGender());
-			pstmt.setString(6, user.getUserId());
-			pstmt.setInt(7, user.getPower());
+			pstmt.setInt(6, user.getPower());
+			pstmt.setString(7, user.getUserId());
 
 			pstmt.executeUpdate();
 
