@@ -4,16 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@ include file="./commons/top.jspf"%>
+
 <title>Main.jsp</title>
 </head>
 <body>
-	<%@ include file="./commons/left_sidemenu.jspf"%>
+  
+	<%@ include file="./commons/top.jspf"%>
+	<div id="cover_container">
+		<%@ include file="./commons/left_sidemenu.jspf"%>
 
-	<div id=main_content>
-		공지사항 또는 인사말
+
+		<div class="wrap ac">
+			<div id="container_wrap">
+
+				<div id=main_content>
+					<h3>공지사항 또는 인사말</h3>
+					<h2>Get out!</h2>
+				</div>
 
 
+			</div>
+		</div>
 	</div>
 
 </body>

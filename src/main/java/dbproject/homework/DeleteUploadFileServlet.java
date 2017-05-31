@@ -20,7 +20,7 @@ public class DeleteUploadFileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UploadDAO uploadDao=new UploadDAO();
 		String fileName=request.getParameter("fileName");
-		File f=new File("C:/web-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/dbproject/upload/"+fileName);
+		File f=new File("D:/V.2/DBproject/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/dbproject/upload/"+fileName);
 		//형근: 현재는 절대주소라서 자신의 로컬 환경에 맞는 경로 변경이 필요하다 따라서 추후에 상대경로로 변경하거나 서버 경로로 변경 필요함  
 		try {
 			if(f.delete()){

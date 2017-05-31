@@ -22,6 +22,14 @@
 </head>
 
 <body>
+<%@ include file="./commons/top.jspf"%>
+	<div id="cover_container">
+		<%@ include file="./commons/left_sidemenu.jspf"%>
+
+
+		<div class="wrap ac">
+			<div id="container_wrap">
+
 	<!-- actionUrl 설정 필요 -->
 			<c:set var = "actionUrl" value = "/board/createBoard" />
 			<c:if test="${isView}">
@@ -30,7 +38,7 @@
 			
 	<form id="board-field" action="${actionUrl}" method="post">
 		
-		<table width="400" border="1" cellspacing="0" cellpadding="0" align="center">
+		<table id = "board_table" width="400" border="1" cellspacing="0" cellpadding="0" align="center">
 			<tr>
 			<td align="center" colspan="2"> 
 				
@@ -139,6 +147,9 @@
 		}
 	}			
 	%>  
+	</div>
+	</div>
+	</div>
 	</div>
 </body>
 </html>

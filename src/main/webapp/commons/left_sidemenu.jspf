@@ -1,14 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-<link href="stylesheets/left_side.css" rel="stylesheet" type="text/css">
-	<div id="left-side">
+
+<!-- 	<div id="Menu">
 		<ul>
 			<li><a href="/board/Boardlist">게시판</a> </li>
 			<li><a href="/visitorsnotes">방명록</a></li>			
-			<li><a href="/subjects/subjectList">과제제출</a></li>
-			
-			<li><a href="/attend/Attendlist">출석체크</a></li>
-			<li><a href="/subject/Subjectlist">과목정보</a></li>
+			<li><a href="#">출석체크</a></li>
+			<li><a href="/upload.jsp">과제제출</a></li>
 		</ul>
-	</div>
+	</div> -->
+
+<div class="dropdown" style="padding-top: 30px; margin-left: 500px;">
+	<button class="btn btn-default dropdown-toggle" type="button"
+		id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"
+		style="background-color: #337ab7; color: #fff;">
+		Menu <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		<li role="presentation"><a role="menuitem" tabindex="-1"
+			href="/board/Boardlist">게시판</a></li>
+		<li role="presentation"><a role="menuitem" tabindex="-1"
+			href="/visitorsnotes">방명록</a></li>
+		<li role="presentation"><a role="menuitem" tabindex="-1" href="/subjects/subjectList">과제제출</a></li>
+		<li role="presentation"><a role="menuitem" tabindex="-1" href="/attend/Attendlist">출석체크</a></li>
+		<li role="presentation"><a role="menuitem" tabindex="-1" href="/subject/Subjectlist">과목정보</a></li>
+	</ul>
+	<!-- 	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="modal"  
+	data-target="#myModal"id = "btn-upload">Upload</button> -->
+
+</div>

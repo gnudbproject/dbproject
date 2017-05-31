@@ -19,7 +19,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>board</title>
-<link href="/stylesheets/board.css?v=1" rel="stylesheet" type="text/css">
+
 <%@ include file="./commons/top.jspf"%>
 
 <script type="text/javascript">
