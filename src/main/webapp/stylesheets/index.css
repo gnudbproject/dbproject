@@ -19,7 +19,7 @@
 
 #main_content {
 	font-weight: 600;
-/* 	color: white; */
+/*  	color: white; */
 }
 
 #left-side {
@@ -87,16 +87,18 @@
 	display: block;
 	clear: both;
 }
-
+  
 #container_wrap {
-/* 	color :white; */
+/*  	color :white; */
+font-weight:700;
 	border: 0px;
-	margin-top: 20px;
+	margin-top: 20px;  
 	text-align: center;
 	overflow: hidden;
 	float: left;
 	width: 1150px;
 	height: 950px;
+	text
 }
 
 #cover_container {
@@ -183,9 +185,13 @@
 
 /*       id = "board_table"  board  나중에 넣자      */
 
-/* #board_table{
+#board_table{
 	border: 3px solid white;
 }
 #a_table{
 	color : white;
-} */
+}
+
+.board-filed>textarea{
+	color:black;
+}

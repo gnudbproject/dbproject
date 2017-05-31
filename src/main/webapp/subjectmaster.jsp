@@ -117,7 +117,7 @@
 	
 	
 	과목 신청 허용<br>
-	<table border="1">
+	<table style ="display: inline-block;" border="1">
 	<tr>
 	<td>&nbsp;&nbsp;신청 허용중이지 않은 과목&nbsp;&nbsp;</td>
 	<td>&nbsp;&nbsp;허용 여부 바꾸기&nbsp;&nbsp;</td>
@@ -146,7 +146,7 @@
 	
 	<br>
 	
-	<table border="1">
+	<table style ="display: inline-block;" border="1">
 	<tr>
 	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;신청 허용중인 과목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 	<td>&nbsp;&nbsp;허용 여부 바꾸기&nbsp;&nbsp;</td>

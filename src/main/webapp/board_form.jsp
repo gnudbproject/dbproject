@@ -75,7 +75,6 @@
 				<td width="70" align="center">CONTENT</td>
 				<td width="330">
 				<c:choose>
-				
 				<c:when test = "${isCreate==true||isUser==true||isMaster==true}" >
 					<textarea name="content"  rows = "13" cols="40">${board.content}</textarea></td>
 				</c:when>
@@ -96,17 +95,17 @@
 				</c:if>
 			
 				<c:if test = "${isUser==true||isMaster==true}">  <!-- master아이디는 모든 게시물 수정삭제 가능 -->
-				<input type="button" name="delete"  value="Delete" onclick="location.href='/board/removeBoard?num=${board.num}'" />
-				<input type="submit" name="modify" value="Modify"/>
+				<input style = "margin-top: 3px;background-color: #337ab7;color: #fff;" type="button" name="delete"  value="Delete" onclick="location.href='/board/removeBoard?num=${board.num}'" />
+				<input style = "margin-top: 3px;background-color: #337ab7;color: #fff;"class = "bnt-custom" type="submit" name="modify" value="Modify"/>
 				</c:if>
 			</c:when>
 			
 			<c:otherwise>
-				<input type="submit" value="Submit" /> 
-				<input type="reset" value="Reset" />
+				<input style = "margin-top: 3px;background-color: #337ab7;color: #fff;" type="submit" value="Submit" /> 
+				<input style = "margin-top: 3px;background-color: #337ab7;color: #fff;" type="reset" value="Reset" />
 			</c:otherwise>
 			</c:choose>
-				<input type="button" value="List" onclick="location.href='/board/Boardlist'" />
+				<input style = "margin-top: 3px;background-color: #337ab7; color: #fff;"type="button" value="List" onclick="location.href='/board/Boardlist'" />
 				</td>
 			</tr>
 	</table>

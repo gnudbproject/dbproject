@@ -141,7 +141,7 @@
 	<OPTION value="3" name="삼">삼</OPTION>
 	
 	--%>
-						</SELECT> <input type="button" value="조회" onclick="choice()">
+						</SELECT> <input class = "bnt-custom" type="button" value="조회" onclick="choice()">
 					</form>
 
 					<br>

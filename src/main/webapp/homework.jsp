@@ -20,8 +20,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>board</title>
 
-<%@ include file="./commons/top.jspf"%>
-
 <script type="text/javascript">
 
 	function change() {;
@@ -45,7 +43,14 @@
 
 </head>
 <body>
+
+	<%@ include file="./commons/top.jspf"%>
+	<div id="cover_container">
 		<%@ include file="./commons/left_sidemenu.jspf"%>
+
+
+		<div class="wrap ac">
+			<div id="container_wrap">
 	<div id="container">
 		<div id="top">
 		
@@ -154,6 +159,8 @@
 		}
 		%>
 	</div>
-	
+			</div>
+		</div>
+	</div>
 </body>
 </html>
