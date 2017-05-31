@@ -22,7 +22,7 @@ public class DownloadUploadFileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileName=request.getParameter("fileName");
 		String strFilenameOutput=new String(fileName.getBytes("euc-kr"),"8859_1");
-		File f=new File("C:/web-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/dbproject/upload/"+fileName);
+		File f=new File("D:/V.2/DBproject/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/dbproject/upload/"+fileName);
 		byte b[]=new byte[(int)f.length()];
 		response.setHeader("Content-Disposition","attachment;filename="+strFilenameOutput);
 		response.setHeader("Content-Length",String.valueOf(f.length()));

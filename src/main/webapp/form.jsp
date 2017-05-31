@@ -6,7 +6,6 @@
 <head>
 <title>Runtime</title>
 
-<link href="stylesheets/form.css" rel="stylesheet" type="text/css">
 </head>
 
 <script>
@@ -34,6 +33,14 @@
 
 
 <body>
+
+<%@ include file="./commons/top.jspf"%>  
+	<div id="cover_container">
+		<%@ include file="./commons/left_sidemenu.jspf"%>
+
+
+		<div class="wrap ac">
+			<div id="container_wrap">
 
 	<div class="signup-container">
 		<div class="signup-header">
@@ -121,7 +128,7 @@
 
 						<c:otherwise>
 							<input type="text" name="userId" value="${user.userId}" />
-							<input type="button" name="id_check" onClick="idchk()"
+							<input type="button" class="btn-custom" name="id_check" onClick="idchk()"
 								value="중복확인">
 						</c:otherwise>
 					</c:choose>
@@ -145,18 +152,20 @@
 				<input type="hidden" name="power" value="${user.power }"/> <!-- 권한 추가 -->
 
 				<div class="signup-footer">
-					<button type="submit" class="sign_up_button">
+					<button type="submit" class="btn-custom">
 
 						<c:set var="buttonName" value="가입하기" />
 						<c:if test="${isUpdate}">
 							<c:set var="buttonName" value="수정하기" />
 						</c:if>
-
 						${ buttonName }
 					</button>
 				</div>
 		</form>
 	</div>
+	</div>
+	</div>
+	</div>  
 
 </body>
 </html>
