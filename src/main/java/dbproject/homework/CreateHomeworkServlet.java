@@ -35,7 +35,7 @@ public class CreateHomeworkServlet extends HttpServlet{
 		}
 
 		
-		response.sendRedirect("/homeworks/homeworkList");
+		response.sendRedirect("/homeworks/homeworkList?subjectNameList="+subjectName);
 	
 	}
 }
