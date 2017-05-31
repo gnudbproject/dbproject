@@ -39,7 +39,7 @@
 							<c:forEach var="list" items="${users }">
 								<tr height="50">
 									<td align="center">
-										<c:if test="${list.power==1||list.userId=='master'}">
+										<c:if test="${list.power==1||list.userId == 'master'}">
 										선생님
 										</c:if>
 										<c:if test="${list.power==0&&list.userId!='master'}">

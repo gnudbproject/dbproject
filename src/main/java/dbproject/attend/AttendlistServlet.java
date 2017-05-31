@@ -21,7 +21,7 @@ public class AttendlistServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
