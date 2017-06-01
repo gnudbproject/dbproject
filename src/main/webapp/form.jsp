@@ -146,7 +146,7 @@
 				</div>
 
 				<div>
-					<label class="" id="password" for="password">Password</label> 
+					<label class=""  for="password">Password</label> 
 					<input type="password" id="password" name="password" value="${user.password}" />
 				</div>
 
@@ -163,7 +163,7 @@
 				<input type="hidden" name="power" value="${user.power }"/> <!-- 권한 추가 -->
 
 				<div class="signup-footer">
-					<button type="submit" class="btn-custom" onclick="passwordVaild();">
+					<button type="button" class="btn-custom" onclick="passwordVaild();">
 
 						<c:set var="buttonName" value="가입하기" />
 						<c:if test="${isUpdate}">
