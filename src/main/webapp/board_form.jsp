@@ -115,37 +115,50 @@
 	<% //추가sh
 	if(confirm != true){ %>
 		<div class="wrap">
-			<div class="wrap2">
+		
 				<form action="/replyReply" method="post">
 					<input type="hidden" name="num" value="${board.num}" />
-					<input type="text" size="80" maxlength="200" name="reContent" value="">
+					<input type="text" size="60" maxlength="200" name="reContent" value="">
 					<input type="submit" name="reWrite" value="댓글입력" />
 				</form>
-	    	</div>
+	    	
 	    
 	    
-	
+	<table border="1px" cellpadding="0" cellspacing="0" align="center">
+		<tr height="30">
+									<td align="center" width="50">아이디</td>
+									<td align="center" width="700">내용</td>
+									<td align="center" width="10">삭제</td>
+								</tr>
 	<%		
 		for(int i=0 ; i < list.size(); i++){
 			reBoardDTO reBoard = (reBoardDTO)list.get(i); 			
 	%>
-			<div class="wrap2">
-				<div class="reName"><%=reBoard.getUserId() %></div>
-				<div class="reRe"><%=reBoard.getContent() %></div>	
-				
+	<tr height="30">
+			<td align="center">
+			<%=reBoard.getUserId() %>
+			</td>
+			<td align="center">
+				<%=reBoard.getContent() %>	
+				</td>
+				<td>
 			<%
 			boolean yn=true;
 			if(request.getSession().getAttribute("isMaster")==null)
 				yn=false;
 			if(request.getSession().getAttribute("userId").equals(reBoard.getUserId()) || yn==true){%>  <!-- 마스터 아이디는 모든댓글 삭제 가능 -->
-				<div class="x"><input class="x" type="button" name="X" value="X" onclick="location.href='/board/removeReBoard?reNum=<%=reBoard.getNum() %>&bNum=<%=reBoard.getBoardNum() %>'" /></div>	
+				<input class="x" type="button" name="X" value="X" onclick="location.href='/board/removeReBoard?reNum=<%=reBoard.getNum() %>&bNum=<%=reBoard.getBoardNum() %>'" />	
 	<%          }%>
+			</td>
 				
-			</div>
+			
 	<%
-		}
+		}%>
+	</tr>
+	<%
 	}			
 	%>  
+	</table>
 	</div>
 	</div>
 	</div>

@@ -69,7 +69,7 @@
 }
 
 ------
-¸Þ ´º -------- .btn-primary {
+ï¿½ï¿½ ï¿½ï¿½ -------- .btn-primary {
 	color: #fff;
 	background-color: #337ab7;
 	border-color: #2e6da4;
@@ -78,7 +78,7 @@
 /* .dropdown-menu{
 	top:;
 	left:;
-}    ¿ø·¡ ÀÖ´ø Å¬·¡½º¿¡ ¿ä¼Ò¸¦ Á¦°ÅÇÏ´Â ¹æ¹ý? */
+}    ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½? */
 -------
 -wrap------
 
@@ -110,7 +110,7 @@ font-weight:700;
 	/* 	margin-top:20px; */
 	text-align: center;
 	margin: 0 auto;
-	overflow: auto; /* ³ÑÄ¡´Â°Å ½ºÅ©·Ñ¹Ù */
+	overflow: auto; /* ï¿½ï¿½Ä¡ï¿½Â°ï¿½ ï¿½ï¿½Å©ï¿½Ñ¹ï¿½ */
 	float: left;
 	height: 250px;
 	/*     border: 1px solid; */
@@ -137,7 +137,7 @@ font-weight:700;
 	font-weight: 700;
 }
 
-/*        ¹æ¸í·Ï   */
+/*        ï¿½ï¿½ï¿½ï¿½   */
 #list-section {
 	margin-top: 30px;
 }
@@ -147,7 +147,7 @@ font-weight:700;
 	margin-top: 10px;
 }
 
-/*           ¸ÞÀÎ           */
+/*           ï¿½ï¿½ï¿½ï¿½           */
 
 /*          form.jsp          */
 #control-label {
@@ -178,20 +178,16 @@ font-weight:700;
 .signup-container {
 	text-align: left;  
 	display: inline-block;
-	color: #fff;
+
 }
 
 
 
-/*       id = "board_"  board  ³ªÁß¿¡ ³ÖÀÚ      */
+/*       id = "board_"  board  ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½      */
 
 #board_table{
 	border: 3px solid white;
 }
 #a_table{
 	color : white;
-}
-
-.board-filed>textarea{
-	color:black;
 }

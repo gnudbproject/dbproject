@@ -25,6 +25,15 @@
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
 
+<script>
+		function msg() {
+			if (confirm("정말 탈퇴 하시겠습니까?")) {
+				location.href = "/users/dropuser?userId=<%=session.getAttribute("userId")%>";
+			} else {
+				return;
+			}
+		}
+	</script>
 
 <div id="header">
 	<div class="wrap">
@@ -54,12 +63,4 @@
 	</div>
 </div>
 
-<script>
-		function msg() {
-			if (confirm("정말 탈퇴 하시겠습니까?")) {
-				location.href = "/users/dropuser?userId=<%=session.getAttribute("userId")%>";
-			} else {
-				return;
-			}
-		}
-	</script>
+	

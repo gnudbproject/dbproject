@@ -11,7 +11,6 @@
 
 	<%@ include file="./commons/top.jspf"%>
 	<div id="cover_container">
-		<%@ include file="./commons/left_sidemenu.jspf"%>
 
 
 		<div class="wrap ac">
@@ -71,16 +70,15 @@
 
 							<div id="button">
 								<div class="controls">
-									<!-- 					<button type="button" onclick="location.href='/users/createForm'" class="btn btn-primary">Sign up</button> -->
-									<!-- <button type="button" onclick="popupOpen();" class="btn btn-danger">Sign up</button> -->
-									<button type="button" class="btn btn-default"
-										data-toggle="modal" data-target="#myLoginModal">Sign
-										up</button>
+									<button type="button" class="btn btn-default" onclick="location.href='/users/createForm'" class="btn btn-primary">Sign up</button>
+									<button type="submit" class="btn btn-default">Sign in</button> 
+									
+									<!-- <button type="button" class="btn btn-default"
+										data-toggle="modal" data-target="#myLoginModal">Sign up</button>
 									<button type="submit" class="btn btn-default">Sign in</button>
-									<!-- 환용 : 가입버튼에 모달 적용 -->
+									환용 : 가입버튼에 모달 적용 -->
 								</div>
 							</div>
-							<a href="#"> forget your ID/password ? </a>
 						</form>
 					</div>
 				</div>
