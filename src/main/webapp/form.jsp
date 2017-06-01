@@ -29,11 +29,12 @@
 		}
 		return false;
 	}
+	
 		function passwordVaild(){
 		var check1=document.getElementById("password");
 		var check2=document.getElementById("password2");
 		if(check1.value!=check2.value){
-			alert("비밀번호를 다시 확인해주세요.")
+			alert("비밀번호를 다시 확인해주세요.");
 		}
 		else{
 			document.getElementById("form-sign").submit();
@@ -145,13 +146,13 @@
 				</div>
 
 				<div>
-					<label class="" for="password">Password</label> <input
-						type="password" name="password" value="${user.password}" />
+					<label class="" id="password" for="password">Password</label> 
+					<input type="password" id="password" name="password" value="${user.password}" />
 				</div>
 
 				<div>
-					<label class="" for="password2">Password-check</label> <input
-						type="password" name="password2" value="${user.password}" />
+					<label class="" for="password2">Password-check</label> 
+					<input  id="password2"	type="password" name="password2" value="${user.password}" />
 				</div>
 
 				<div>
