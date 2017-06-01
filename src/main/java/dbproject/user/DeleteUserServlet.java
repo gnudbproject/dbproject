@@ -35,6 +35,10 @@ public class DeleteUserServlet extends HttpServlet {
 			String sessionId=SessionUtils.getStringValue(session, "userId");  
 			if(sessionId.equals(userId)){
 				session.removeAttribute("userId");
+				if(!SessionUtils.isEmpty(session, "isMaster"))
+					session.removeAttribute("isMaster");
+				if(!SessionUtils.isEmpty(session, "subjectName"))
+					session.removeAttribute("subjectName");
 				response.sendRedirect("/");
 			}
 			//본인 아이디가 아닐경우
